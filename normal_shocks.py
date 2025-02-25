@@ -63,7 +63,7 @@ def normal_shock_solver(input_var, input_value, g = 1.4):
     Calculates all normal shock values given any input.
     
     Parameters:
-    - input var (string)  : 'M', 'M2', 'Pt2_Pt1', 'T2_T1', 'P2_P1', 'P1_Pt2', 'rho2_rho1', and Pt1_P1.
+    - input_var (string)  : 'M', 'M2', 'Pt2_Pt1', 'T2_T1', 'P2_P1', 'P1_Pt2', 'rho2_rho1', and Pt1_P1.
     - input_value (float) : Any postive float value
     - g (float)           : Heat capacity ratio. Set to 1.4 by default.
     
