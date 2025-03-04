@@ -14,7 +14,6 @@ from scipy.optimize import brentq
 
 # Isentropic Flow Relations ======================================================================
 def A_Astar(M, g):
-    """Isentropic area ratio A/A*"""
     term = (2 / (g + 1)) * (1 + ((g - 1) / 2) * (M ** 2))
     return (1 / M) * (term ** ((g + 1) / (2 * (g - 1))))
 
@@ -56,7 +55,6 @@ def Tstar_T0(g):
 
 # Angles ------------------------------------------------------------------------------------------
 def nu(M, g):
-    """Prandtl-Meyer function, only valid for M >= 1"""
     if M < 1:
         return 0
     
@@ -66,7 +64,6 @@ def nu(M, g):
     return term_1 * term_2 - term_3
 
 def mu(M):
-    """Mach angle, only valid for M >= 1"""
     if M < 1:
         return 0
     
@@ -129,7 +126,7 @@ def iscentropic_flow_solver(input_var, input_value, g = 1.4):
     iscentropic_flow_data = {"Subsonic": {}, "Supersonic": {}}
     
     # Mach Number ----------------------------------------------------------------------------------
-    if input_var == 'M':
+    if (input_var == 'M'):
         M = input_value
         if M <= 0:
             raise ValueError("M must be greater than 0")
@@ -137,8 +134,8 @@ def iscentropic_flow_solver(input_var, input_value, g = 1.4):
         iscentropic_flow_data[regime]["M"] = M
 
     # Area Ratio -----------------------------------------------------------------------------------
-    elif input_var == 'A_Astar':
-        if input_value <= 1:
+    elif (input_var == 'A_Astar'):
+        if (input_value <= 1):
             raise ValueError("A/A* must be greater than 1")
         
         M_subsonic = brentq(SOLVE_M_from_A_Astar, M_min, 0.999999, args = (input_value, g))
@@ -169,59 +166,59 @@ def iscentropic_flow_solver(input_var, input_value, g = 1.4):
         iscentropic_flow_data["Supersonic"]["mu"] = mu(M_supersonic)
 
     # Pressure Ratios ------------------------------------------------------------------------------
-    elif input_var == 'P_Pt':
+    elif (input_var == 'P_Pt'):
         if not (0 < input_value < 1):
             raise ValueError("0 < P/Pt < 1")
         M = brentq(SOLVE_M_from_P_Pt, M_min, M_max, args = (input_value, g))
         regime = "Subsonic" if M < 1 else "Supersonic"
         iscentropic_flow_data[regime]["M"] = M
 
-    elif input_var == 'P_Pstar':
-        if input_value <= 0:
+    elif (input_var == 'P_Pstar'):
+        if (input_value <= 0):
             raise ValueError("P/P* must be positive")
         M = brentq(SOLVE_M_from_P_Pstar, M_min, M_max, args = (input_value, g))
         regime = "Subsonic" if M < 1 else "Supersonic"
         iscentropic_flow_data[regime]["M"] = M
 
     # Density Ratios ------------------------------------------------------------------------------
-    elif input_var == 'rho_rhot':
+    elif (input_var == 'rho_rhot'):
         if not (0 < input_value < 1):
             raise ValueError("0 < rho/rho_t < 1")
         M = brentq(SOLVE_M_from_rho_rhot, M_min, M_max, args = (input_value, g))
         regime = "Subsonic" if M < 1 else "Supersonic"
         iscentropic_flow_data[regime]["M"] = M
 
-    elif input_var == 'rho_rhostar':
-        if input_value <= 0:
+    elif (input_var == 'rho_rhostar'):
+        if (input_value <= 0):
             raise ValueError("rho/rho* must be positive")
         M = brentq(SOLVE_M_from_rho_rhostar, M_min, M_max, args = (input_value, g))
         regime = "Subsonic" if M < 1 else "Supersonic"
         iscentropic_flow_data[regime]["M"] = M
 
     # Temperature Ratios --------------------------------------------------------------------------
-    elif input_var == 'T_Tt':
+    elif (input_var == 'T_Tt'):
         if not (0 < input_value < 1):
             raise ValueError("0 < T/Tt < 1")
         M = brentq(SOLVE_M_from_T_Tt, M_min, M_max, args = (input_value, g))
         regime = "Subsonic" if M < 1 else "Supersonic"
         iscentropic_flow_data[regime]["M"] = M
 
-    elif input_var == 'T_Tstar':
-        if input_value <= 0:
+    elif (input_var == 'T_Tstar'):
+        if (input_value <= 0):
             raise ValueError("T/T* must be positive")
         M = brentq(SOLVE_M_from_T_Tstar, M_min, M_max, args = (input_value, g))
         regime = "Subsonic" if M < 1 else "Supersonic"
         iscentropic_flow_data[regime]["M"] = M
 
     # Angles --------------------------------------------------------------------------------------
-    elif input_var == 'nu':
-        if input_value <= 0:
+    elif (input_var == 'nu'):
+        if (input_value <= 0):
             raise ValueError("nu must be positive")
         M = brentq(SOLVE_M_from_nu, 1, M_max, args = (input_value, g))
         regime = "Supersonic"  
         iscentropic_flow_data[regime]["M"] = M
 
-    elif input_var == 'mu':
+    elif (input_var == 'mu'):
         if not (0 < input_value < np.pi / 2):
             raise ValueError("0 < mu < pi/2")
         M = brentq(SOLVE_M_from_mu, 1, M_max, args = (input_value,))
