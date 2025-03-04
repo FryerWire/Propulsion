@@ -6,8 +6,10 @@ Modification Date : 3/4/2025
 """
 
 
+
 import numpy as np
 from scipy.optimize import brentq
+
 
 
 # Normal Shock Relations ==========================================================================
@@ -38,6 +40,7 @@ def T2_T1(M, g):
     return (2 + (g - 1) * M**2) * (2 * g * M**2 - (g - 1)) / ((g + 1)**2 * M**2)
 
 
+
 # brentq Function Solvers =========================================================================
 def SOLVE_M_from_M2(M, target, g):
     return M2(M, g) - target
@@ -62,6 +65,7 @@ def SOLVE_M_from_T2_T1(M, target, g):
 # Density Ratios ----------------------------------------------------------------------------------
 def SOLVE_M_from_rho2_rho1(M, target, g):
     return rho2_rho1(M, g) - target
+
 
 
 # Normal Shock Calculator =========================================================================
@@ -91,6 +95,7 @@ def normal_shock_solver(input_var, input_value, g = 1.4):
     M_max = 10.0         
 
     normal_shock_data = {}
+    
     # Mach ----------------------------------------------------------------------------------------
     if (input_var == "M"):
         M = input_value
