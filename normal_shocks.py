@@ -92,7 +92,7 @@ def normal_shock_solver(input_var, input_value, g = 1.4):
     """
     
     M_min = 1.0 + 1e-6  
-    M_max = 10.0         
+    M_max = 100        
 
     normal_shock_data = {}
     
