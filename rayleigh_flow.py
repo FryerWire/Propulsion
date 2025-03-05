@@ -76,7 +76,7 @@ def rayleigh_flow_solver(input_var, input_value, g = 1.4):
     """
 
     M_min = 1e-6
-    M_max = 10
+    M_max = 100
 
     rayleigh_flow_data = {"Subsonic": {}, "Supersonic": {}}
     
