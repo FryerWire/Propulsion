@@ -17,7 +17,14 @@ from variable_mapping import variable_mapping as map
 
 # Main Program ====================================================================================
 gas_parameters = {'R': 287, 'g': 1.4, 'cp': 1004}
-knowns = {"M0": 2.5, "P0": 15000, "T0": 273.15 - 40, "Tt4": 1800, 'h': 42000000, "pi_c": 14}
+
+# Knowns
+# knowns = {'M0': 2, 'P0': 10000, 'T0': 273.15 - 45, 'pi_c': 12, 'tau_lambda': 8, 'tau_t': 0.735}
+# knowns = {'M0': 1.5, 'P0': 25000, 'T0': 223, 'Tt4': 1900, 'h': 42800000}
+# knowns = {'Tt4': 1200, 'T0': 261, 'M0': 0.6, 'tau_c': 2}
+# knowns = {'M0': 2, 'pi_c': 9, 'T0': 200, 'Tt4': 1200}
+# knowns = {'M0': 2.5, 'P0': 15000, 'T0': 273.15 - 40, 'pi_c': 14, 'Tt4': 1800, 'h': 42000000}
+knowns = {'M0': 0.4, 'P0': 95000, 'T0': 283.15, 'm0_dot': 65, 'pi_c': 25, 'tau_lambda': 6, 'h': 428000000}
 
 result = tjc(knowns, gas_parameters)
 
