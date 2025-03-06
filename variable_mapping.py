@@ -1,8 +1,12 @@
+
 """
 Variable Mapping Formatter
 Start Date        : 3/5/2025
 Modification Date : 3/5/2025
 """
+
+
+
 def variable_mapping(r_and_s_known):
     ratios_and_sections = {
         "Machs": {"M0": 0, "M1": 0, "M2": 0, "M3": 0, "M4": 0, "M5": 0, "M6": 0, "M7": 0, "M8": 0, "M9": 0},
