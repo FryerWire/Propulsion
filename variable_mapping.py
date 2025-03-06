@@ -21,7 +21,7 @@ def variable_mapping(r_and_s_known):
             "tau": {"tau_r": 0, "tau_d": 0, "tau_c": 0, "tau_b": 0, "tau_lambda": 0, "tau_t": 0, "tau_n": 0},
             "pi": {"pi_r": 0, "pi_d": 0, "pi_c": 0, "pi_b": 0, "pi_lambda": 0, "pi_t": 0, "pi_n": 0}
         },
-        "Misc": {"f": 0, "S": 0, "u9": 0, "n_th": 0, "n_p": 0, "a0": 0, "F_m0_dot": 0}
+        "Misc": {"f": 0, "S": 0, "F": 0, "u0": 0, "u9": 0, "n_th": 0, "n_p": 0, "a0": 0, "F_m0_dot": 0}
     }
     
     # Update with known values
