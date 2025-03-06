@@ -10,10 +10,10 @@ from fanno_flow import fanno_flow_solver as ffc
 import rayleigh_flow as rfc
 import isentropic_flow as ifc
 import normal_shocks as nsc
-from turbojet import turbo_jet_solver as tjc
+from turbojet import turbojet_solver as tjc
 from variable_mapping import variable_mapping as map
 
-
+import numpy as np
 
 # Main Program ====================================================================================
 gas_parameters = {'R': 287, 'g': 1.4, 'cp': 1004}
@@ -26,7 +26,12 @@ gas_parameters = {'R': 287, 'g': 1.4, 'cp': 1004}
 knowns = {'M0': 2.5, 'P0': 15000, 'T0': 273.15 - 40, 'pi_c': 14, 'Tt4': 1800, 'h': 42000000}
 # knowns = {'M0': 0.4, 'P0': 95000, 'T0': 283.15, 'm0_dot': 65, 'pi_c': 25, 'tau_lambda': 6, 'h': 428000000}
 
-result = tjc(knowns, gas_parameters)
+M0 = 222.222 / np.sqrt(1.4 * 287 * 223.15)
+
+HW_knowns = {'M0': M0, 'T0': 223.15, 'P0': 24000, 'Tt4': 1093.15, 'h': 43300000, 'A': 0.08}
+
+# knowns = {'F': 50000, 'm0_dot': 45, 'mf_dot': 2.65, 'h':42800000}
+result = tjc(knowns)
 
 
 
