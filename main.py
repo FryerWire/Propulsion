@@ -11,7 +11,7 @@ import rayleigh_flow as rfc
 import isentropic_flow as ifc
 import normal_shocks as nsc
 from turbojet import turbojet_solver as tjc
-from variable_mapping import variable_mapping as map
+from Utilities.variable_mapping import variable_mapping as map
 
 import numpy as np
 

@@ -1,2 +1,0 @@
-# Propulsion
-A propulsion calculator
