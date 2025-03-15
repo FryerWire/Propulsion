@@ -2,49 +2,90 @@
 """
 Variable Mapping Formatter
 Start Date        : 3/5/2025
-Modification Date : 3/5/2025
+Modification Date : 3/14/2025
 """
 
 
 
-def variable_mapping(r_and_s_known):
-    ratios_and_sections = {
-        "Machs": {"M0": 0, "M1": 0, "M2": 0, "M3": 0, "M4": 0, "M5": 0, "M6": 0, "M7": 0, "M8": 0, "M9": 0},
-        "Fuel": {"mf_dot": 0, "m0_dot": 0},
-        "Ratios": {
-            "T": {"T0": 0, "T1": 0, "T2": 0, "T3": 0, "T4": 0, "T5": 0, "T6": 0, "T7": 0, "T8": 0, "T9": 0},
-            "P": {"P0": 0, "P1": 0, "P2": 0, "P3": 0, "P4": 0, "P5": 0, "P6": 0, "P7": 0, "P8": 0, "P9": 0},
-            "Tt": {"Tt0": 0, "Tt1": 0, "Tt2": 0, "Tt3": 0, "Tt4": 0, "Tt5": 0, "Tt6": 0, "Tt7": 0, "Tt8": 0, "Tt9": 0},
-            "Pt": {"Pt0": 0, "Pt1": 0, "Pt2": 0, "Pt3": 0, "Pt4": 0, "Pt5": 0, "Pt6": 0, "Pt7": 0, "Pt8": 0, "Pt9": 0}
+# Variable Mapping ================================================================================
+def variable_mapping(gas_constants, known_values, sections = {}):
+    """
+    Variable Mapping takes in three inputs and remaps them to a global dictionary.
+    
+    Parameters:
+    - gas_constants (dict) : Gas constant dictionary
+    - known_values (dict)  : Known values dictionary
+    - sections (dict)      : Sections dictionary
+    
+    Returns:
+    - variable_map (dict) : Globa variable dictionary
+    
+    Examples:
+    >>> gas_parameters = {'R': 287, 'g': 1.4, 'cp': 1004}
+    >>> sections = {'Isentropic': ['01', '12']}
+    >>> knowns = {'F': 123456789, 'M2': 123456789}
+    >>> print(map(gas_parameters, knowns))
+    """
+    
+    variable_map = {
+        'Gas Constants' : {'gamma': None, 'cp': None},
+        'Sections'     : {'Fanno': None, 'Normal': None, 'Raleigh': None, 'Isentropic': None},
+        'Machs'        : {},
+        
+        'States' : {
+            'Temperature' : {'T': {}, 'Tt': {}, 'T*': None, 'Tt*': None}, 
+            'Pressure'    : {'P': {}, 'Pt': {}, 'P*': None, 'Pt*': None},
+            'rho'         : {'rho': {}, 'rhot': {}, 'rho*': None, 'rhot*': None}
         },
-        "Sections": {
-            "tau": {"tau_r": 0, "tau_d": 0, "tau_c": 0, "tau_b": 0, "tau_lambda": 0, "tau_t": 0, "tau_n": 0},
-            "pi": {"pi_r": 0, "pi_d": 0, "pi_c": 0, "pi_b": 0, "pi_lambda": 0, "pi_t": 0, "pi_n": 0}
+        
+        'Thermo Ratio' : {
+            'Temperature' : {'T1/T0': {}, 'Tt1/Tt0': {}, 'T1/T*': {}, 'Tt1/Tt*': {}},
+            'Pressure'     : {'P1/P0': {}, 'Pt1/Pt0': {}, 'P1/P*': {}, 'Pt1/Pt*': {}},
+            'rho'          : {'rho1/rho0': {}, 'rhot1/rhot0': {}, 'rho1/rho*': {}, 'rhot1/rhot*': {}},
         },
-        "Misc": {"f": 0, "S": 0, "F": 0, "u0": 0, "u9": 0, "n_th": 0, "n_p": 0, "a0": 0, "F_m0_dot": 0}
+        
+        'Section Ratios' : {'tau': {}, 'pi': {}},
+        'Misc'           : {}
     }
     
-    # Update with known values
-    for key, value in r_and_s_known.items():
-        found = False
-        if key in ratios_and_sections["Machs"]:
-            ratios_and_sections["Machs"][key] = value
-            found = True
-        for category, sub_dict in ratios_and_sections["Ratios"].items():
-            if key in sub_dict:
-                sub_dict[key] = value
-                found = True
-        for category, sub_dict in ratios_and_sections["Sections"].items():
-            if key in sub_dict:
-                sub_dict[key] = value
-                found = True
-        if key in ratios_and_sections["Fuel"]:
-            ratios_and_sections["Fuel"][key] = value
-            found = True
-        if key in ratios_and_sections["Misc"]:
-            ratios_and_sections["Misc"][key] = value
-            found = True
-        if not found:
-            print(f"Warning: Key '{key}' not found in ratios_and_sections.")
+    # 'var_map' Values being updated --------------------------------------------------------------
+    variable_map_list = [gas_constants, sections, known_values]
+    for i in range(len(variable_map_list)):
+        for key, value in variable_map_list[i].items():
+            if (key in variable_map['Gas Constants']):
+                variable_map['Gas Constants'][key] = value
+                
+            elif (key in variable_map['Sections']):
+                variable_map['Sections'][key] = value
+                
+            elif (key.startswith('M')):
+                variable_map['Machs'][key] = value
+                
+            elif (key in variable_map['Sections']):
+                variable_map['Sections'][key] = value
+            
+            # States ------------------------------------------------------------------------------
+            elif (key in variable_map['States']['Temperature']):
+                variable_map['States']['Temperature'][key] = value
+                
+            elif (key in variable_map['States']['Pressure']):
+                variable_map['States']['Pressure'][key] = value
+                
+            elif (key in variable_map['States']['rho']):
+                variable_map['States']['rho'][key] = value
+                
+            # Thermo Ratio ------------------------------------------------------------------------
+            elif (key in variable_map['Thermo Ratio']['Temperature']):
+                variable_map['Thermo Ratio']['Temperature'][key] = value
+                
+            elif (key in variable_map['Thermo Ratio']['Pressure']):
+                variable_map['Thermo Ratio']['Pressure'][key] = value
+                
+            elif (key in variable_map['Thermo Ratio']['rho']):
+                variable_map['Thermo Ratio']['rho'][key] = value
+                
+            else: 
+                variable_map['Misc'][key] = value
     
-    return ratios_and_sections
+    return variable_map
+    
