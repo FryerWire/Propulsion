@@ -28,10 +28,7 @@ import numpy as np
 
 # Main Program ====================================================================================
 gas_parameters = {'R': 287, 'g': 1.4, 'cp': 1004}
-sections = {'Isentropic': ['01', '12']}
-knowns = {'F': 123456789, 'M2': 123456789, 'M0': 123}
+sections = {'Fanno': ['02', '03'], 'Isentropic': ['01', '12']}
+knowns = {'F': 123456789, 'M2': 123456789, 'M0': 123, 'P0': 1, 'rho1': 3}
 
-print()
-fprint(map(gas_parameters, knowns))
-print()
-
+fprint(map(gas_parameters, knowns, sections))

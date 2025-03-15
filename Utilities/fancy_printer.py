@@ -7,43 +7,75 @@ Modification Date : 3/14/2025
 
 
 
-# Fancy Printing ==================================================================================
-def fancy_printing(inputted_dict, indent_value = 0, is_top_level = True):
+# Helper Function =================================================================================
+def has_valid_content(dictionary):
     """
-    Fancy printing of any inputted dictionary with aligned colons.
+    Recursively check if a dictionary has any non-None, non-empty values.
+    
+    Parameters:
+    - dictionary (dict): Any dictionary
+    
+    Returns
+    - Boolean (bool) : True if not empty
+    """
+    
+    if not isinstance(dictionary, dict):
+        return True
+    
+    for value in dictionary.values():
+        if value is None:
+            continue
+        if isinstance(value, dict):
+            if value and has_valid_content(value):
+                return True
+        elif isinstance(value, (list, set)):
+            if value:
+                return True
+        else:
+            return True
+        
+    return False
+
+
+
+# Fancy Printing ==================================================================================
+def fancy_printing(inputted_dict, indent_level = 0, is_top_level = False):
+    """
+    Fancy printing of any inputted dictionary with aligned colons and spaces between sections.
+    Only prints sections with non-empty, non-None values.
     
     Parameters:
     - inputted_dict (dict) : Any dictionary
     - indent_value (int)   : Recursive indentation
+    - is_top_level (bool)  : Flag to indicate top-level call for initial spacing
     
     Returns:
-    - Print statements
+    - Prints
     """
-
-    spacing = ' ' * indent_value
-    first_key = True                  # Track first key to avoid extra blank line at the start
-    keys = list(inputted_dict.keys()) # Get list of keys to track the last one
-    if is_top_level and keys:
+    
+    tab = "\t"
+    
+    if (is_top_level and (indent_level == 0)):
         print()
-
-    max_key_length = max((len(key) for key in inputted_dict.keys()), default = 0) if not is_top_level else 0
-    for i, (key, value) in enumerate(inputted_dict.items()):
-        if is_top_level and not first_key:
-            print() # Add a blank line between top-level keys
-        first_key = False
-
-        padded_key = key.ljust(max_key_length) if not is_top_level else key
-        if is_top_level:
-            print(f"{spacing}{padded_key}:", end = "")
-        else:
-            print(f"{spacing}{padded_key} :", end = "")
-
+    
+    valid_items = [(k, v) for k, v in inputted_dict.items() if has_valid_content(v)]
+    for i, (key, value) in enumerate(valid_items):
+        base_indent = tab * indent_level
+        
         if isinstance(value, dict):
-            print() 
-            fancy_printing(value, indent_value + 4, is_top_level = False)
+            print(f"{base_indent}{key}:")
+            fancy_printing(value, indent_level + 1)
+                
+        elif isinstance(value, (list, set)):
+            print(f"{base_indent}{key}:")
+            for item in value:
+                print(f"{base_indent}{tab}{item}")
+                    
         else:
-            print(f" {value}")
-
-        if (is_top_level and (i == len(keys) - 1)):
+            print(f"{base_indent}{key} : {str(value)}")
+        
+        if ((indent_level == 0) and (i < len(valid_items) - 1)):
             print()
-            
+
+    if ((indent_level == 0) and valid_items):
+        print()

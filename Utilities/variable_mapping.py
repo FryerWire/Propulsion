@@ -63,6 +63,10 @@ def variable_mapping(gas_constants, known_values, sections = {}):
                 
             elif (key in variable_map['Sections']):
                 variable_map['Sections'][key] = value
+                
+
+            # ADD: Need to add P1, Pt, P*, ...
+            
             
             # States ------------------------------------------------------------------------------
             elif (key in variable_map['States']['Temperature']):
