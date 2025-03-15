@@ -53,7 +53,7 @@ def fancy_printing(inputted_dict, indent_level = 0, is_top_level = False):
     - Prints
     """
     
-    tab = "\t"
+    tab = "    "
     
     if (is_top_level and (indent_level == 0)):
         print()
