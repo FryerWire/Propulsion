@@ -1,0 +1,7 @@
+
+Jet Propulsion Calculator 0.3.0 (3/16/2025)
+
+# Features
+- 'variable_mapping' function was updated to follow the new dictionary styling
+- 'Text Files' folder was created to organize code changes
+

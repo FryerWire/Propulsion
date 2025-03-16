@@ -27,10 +27,12 @@ def variable_mapping(gas_constants, sections):
     >>> ]
     """
     
+    
     variable_map = {
         'Gas Constants' : {'gamma': None, 'cp': None},
         'Sections'      : [] # Changed to a list to hold multiple sections
     }
+    
     
     # Default section template --------------------------------------------------------------------
     section_template = {
@@ -54,6 +56,7 @@ def variable_mapping(gas_constants, sections):
         'Misc'           : {}
     }
     
+    
     # Handle sections input -----------------------------------------------------------------------
     if isinstance(sections, dict) and sections:                      # Single section as dict
         variable_map['Sections'].append(section_template.copy())
@@ -65,6 +68,7 @@ def variable_mapping(gas_constants, sections):
     else:                                                            # No sections provided
         variable_map['Sections'].append(section_template.copy())
         section_idx = 0
+    
     
     # 'var_map' Values being updated --------------------------------------------------------------
     variable_map_list = [gas_constants, sections]
@@ -85,6 +89,7 @@ def variable_mapping(gas_constants, sections):
                 elif (key.startswith('M')):
                     variable_map['Sections'][0]['Machs'][key] = value
                     
+                    
                 # States ------------------------------------------------------------------------------
                 elif (key in variable_map['Sections'][0]['States']['Temperature']):
                     variable_map['Sections'][0]['States']['Temperature'][key] = value
@@ -95,6 +100,7 @@ def variable_mapping(gas_constants, sections):
                 elif (key in variable_map['Sections'][0]['States']['rho']):
                     variable_map['Sections'][0]['States']['rho'][key] = value
                     
+                    
                 # Thermo Ratio ------------------------------------------------------------------------
                 elif (key in variable_map['Sections'][0]['Thermo Ratio']['Temperature']):
                     variable_map['Sections'][0]['Thermo Ratio']['Temperature'][key] = value
@@ -104,6 +110,7 @@ def variable_mapping(gas_constants, sections):
                     
                 elif (key in variable_map['Sections'][0]['Thermo Ratio']['rho']):
                     variable_map['Sections'][0]['Thermo Ratio']['rho'][key] = value
+                    
                     
                 else: 
                     variable_map['Sections'][0]['Misc'][key] = value
@@ -117,6 +124,7 @@ def variable_mapping(gas_constants, sections):
                     elif (key.startswith('M')):
                         variable_map['Sections'][idx]['Machs'][key] = value
                         
+                        
                     # States ----------------------------------------------------------------------
                     elif (key in variable_map['Sections'][idx]['States']['Temperature']):
                         variable_map['Sections'][idx]['States']['Temperature'][key] = value
@@ -127,6 +135,7 @@ def variable_mapping(gas_constants, sections):
                     elif (key in variable_map['Sections'][idx]['States']['rho']):
                         variable_map['Sections'][idx]['States']['rho'][key] = value
                         
+                        
                     # Thermo Ratio ----------------------------------------------------------------
                     elif (key in variable_map['Sections'][idx]['Thermo Ratio']['Temperature']):
                         variable_map['Sections'][idx]['Thermo Ratio']['Temperature'][key] = value
@@ -136,6 +145,7 @@ def variable_mapping(gas_constants, sections):
                         
                     elif (key in variable_map['Sections'][idx]['Thermo Ratio']['rho']):
                         variable_map['Sections'][idx]['Thermo Ratio']['rho'][key] = value
+                        
                         
                     else: 
                         variable_map['Sections'][idx]['Misc'][key] = value
