@@ -19,6 +19,9 @@ from Utilities.unit_converter import unit_conversion as unit
 from Utilities.variable_mapping import variable_mapping as map
 from Utilities.fancy_printer import fancy_printing as fprint
 
+# Problem Solvers ---------------------------------------------------------------------------------
+from Problem_Solvers.solutions import answer_checking as check
+
 
 
 # External Imports ================================================================================
@@ -28,12 +31,20 @@ import numpy as np
 
 # Main Program ====================================================================================
 gas_parameters = {'R': 287, 'g': 1.4, 'cp': 1004}
+
+# Testing Solutions ===============================================================================
+TEST_1 = {
+    'Sections' : [
+        {'Section Num': 1, 'Flow Type': 'Isentropic', 'V1': 240, 'P1': 170000, 'T1': 320, 'M1': 0.67, 'Tt1': 349, 'Pt1': 230000},
+        {'Section Num': 2, 'Flow Type': 'Isentropic', 'V2': 290, 'P2': 170000, 'Tt2': 349, 'T2': 307, 'Pt2': 211000}
+    ]
+}
+
+TEST_2 = {
+    'Sections' : [
+        {'Section Num': 1, 'Flow Type': 'Isentropic', 'V1': 480, 'P1': 170000, 'T1': 320, 'M1': 0.67, 'Tt1': 349, 'Pt1': 738},
+        {'Section Num': 2, 'Flow Type': 'Isentropic', 'V2': 290, 'P2': 180, 'Tt2': 349, 'T2': 307, 'Pt2': 211000, 'Z': 10}
+    ]
+}
                   
-sections = [
-    {'Section Num': 1, 'Flow Type': 'Isentropic', 'V': 240, 'P': 170000, 'T': 320, 'M': 0.67, 'Tt': 349, 'Pt': 230000},
-    {'Section Num': 2, 'Flow Type': 'Isentropic', 'V': 290, 'P': 170000, 'Tt': 349, 'T': 307, 'Pt': 211000}
-]
-
-print(map(sections))
-
-# fprint(map(gas_parameters, sections))
+print(check(TEST_1, TEST_2))

@@ -1,5 +1,10 @@
 
 3/16/25 ===========================================================================================
+    Solutions -------------------------------------------------------------------------------------
+        Figure out a way to check the global values in the file from another file
+        Make the prints better
+            Section 1: P2: 1 | P2: 3 | Error: 3%
+
     Fancy Printer ---------------------------------------------------------------------------------
         Needs to print out two different formats
         Needs to print correct values: V1, V2, ..., Vn

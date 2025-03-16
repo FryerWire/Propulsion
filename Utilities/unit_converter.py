@@ -14,8 +14,8 @@ def unit_conversion(value, from_unit, to_unit):
     
     Parameters:
     - value (float)   : Any float value
-    - from_unit (str) : Any string in SI_prefix, imperial_units, temp_to_kelvin, and kelvin_to_temp
-    - to_unit (str)   : Any string in SI_prefix, imperial_units, temp_to_kelvin, and kelvin_to_temp
+    - from_unit (str) : Any string in SI_prefix, imperial_units, temp_to_kelvin, kelvin_to_temp, or pressure_units
+    - to_unit (str)   : Any string in SI_prefix, imperial_units, temp_to_kelvin, kelvin_to_temp, or pressure_units
     
     Returns:
     - converted_value (float) : The new unit converted value
@@ -66,11 +66,27 @@ def unit_conversion(value, from_unit, to_unit):
         'K' : lambda t : t                            # Kelvin
     }
     
+    # Pressure Conversion -------------------------------------------------------------------------
+    pressure_units = {
+        'Pa'   : 1,       # Pascal (Base Unit)
+        'kPa'  : 1e3,     # Kilopascal
+        'MPa'  : 1e6,     # Megapascal
+        'bar'  : 1e5,     # Bar
+        'atm'  : 101325,  # Standard Atmosphere
+        'psi'  : 6894.76, # Pounds per Square Inch
+        'mmHg' : 133.322, # Millimeters of Mercury
+        'torr' : 133.322  # Torr (Equivalent to mmHg)
+    }
     
     # Temperature Checks --------------------------------------------------------------------------
     if (from_unit in temp_to_kelvin) and (to_unit in kelvin_to_temp):
         value_in_kelvin = temp_to_kelvin[from_unit](value)
         return kelvin_to_temp[to_unit](value_in_kelvin)
+
+    # Pressure Checks -----------------------------------------------------------------------------
+    if (from_unit in pressure_units) and (to_unit in pressure_units):
+        value_in_Pa = value * pressure_units[from_unit] # Convert to Pascals
+        return value_in_Pa / pressure_units[to_unit]    # Convert to Target Unit
 
     # 'to' and 'from' Unit Checks -----------------------------------------------------------------
     if (from_unit in SI_prefix):
@@ -85,7 +101,7 @@ def unit_conversion(value, from_unit, to_unit):
     elif (to_unit in imperial_units):
         to_factor = imperial_units[to_unit]
     else:
-        raise TypeError("Invalid 'from' Unit")
+        raise TypeError("Invalid 'to' Unit")
 
     value_in_base_unit = value * from_factor
     converted_value = value_in_base_unit / to_factor
