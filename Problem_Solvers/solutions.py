@@ -53,13 +53,21 @@ def answer_checking(needs_checking, answers):
         
         needs_checking_dict = needs_checking['Sections'][i]
         for key, value in ans_dict.items():
+            term_A = "Section: " + str(ans_dict.get('Section Num')) + " "
+            term_B = key + " "
             if (key not in needs_checking_dict):
-                print(f"\nSection {ans_dict.get('Section Num')}: MISSING =============================")
-                print(f"    needs_checking: {key}: {needs_checking_dict.get(key)}")
-                print(f"    answers_dict  : {key}: {ans_dict.get(key)}\n")
+                term_C1 = "MISSING "
+                term_D1 = "=" * (50 - len(term_A) - len(term_B) - len(term_C1))
+
+                print(f"\n{term_A + term_B + term_C1 + term_D1}")
+                print(f"    needs_checking: {needs_checking_dict.get(key)}")
+                print(f"    answers_dict  : {ans_dict.get(key)}\n")
 
             elif (needs_checking_dict[key] != value):
-                print(f"\nSection {ans_dict.get('Section Num')}: MISMATCHING =========================")
-                print(f"    needs_checking: {key}: {needs_checking_dict.get(key)}")
-                print(f"    answers_dict  : {key}: {ans_dict.get(key)}")
-                print(f"    Percent Error : {len(key) * ' '}: {round(np.abs((needs_checking_dict.get(key) - ans_dict.get(key)) / ans_dict.get(key)) * 100, 3)}%")
+                term_C2 = "MISMATCHING "
+                term_D2 = "=" * (50 - len(term_A) - len(term_B) - len(term_C2))
+                
+                print(f"\n{term_A + term_B + term_C2 + term_D2}")
+                print(f"    needs_checking: {needs_checking_dict.get(key)}")
+                print(f"    answers_dict  : {ans_dict.get(key)}")
+                print(f"    Percent Error : {round(np.abs((needs_checking_dict.get(key) - ans_dict.get(key)) / ans_dict.get(key)) * 100, 3)}%")
