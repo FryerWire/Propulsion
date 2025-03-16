@@ -2,6 +2,7 @@
 3/16/25 ===========================================================================================
     Fancy Printer ---------------------------------------------------------------------------------
         Needs to print out two different formats
+        Needs to print correct values: V1, V2, ..., Vn
             FORMAT 1:
                 Sections ==================================
                     0 - Isentropic
@@ -29,6 +30,15 @@
                     Pt0: 0
                     T0: 0
                     Tt0: 0
+
+                    ...
+
+            FORMAT 3: (HW)
+                Sections 0 ================================
+                    Flow Type: Isentropic
+                    My ANS     Correct ANS
+                    Mach: 0    Mach : 1
+                    P0: 0      P0: 1
 
                     ...
             
