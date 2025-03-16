@@ -1,106 +1,120 @@
 
 """
 Fancy Printer
-Start Date        : 3/14/2025
-Modification Date : 3/14/2025
-"""
-
-"""
-NOTE: This printing function needs to change but I will do that later
+Start Date        : 3/16/2025
+Modification Date : 3/16/2025
 """
 
 
 
-# Helper Function =================================================================================
-def has_valid_content(dictionary):
+# Section Printing Function =======================================================================
+def section_printer(data):
     """
-    Recursively check if a dictionary has any non-None, non-empty values.
+    Prints section data in a formatted style with   delimiters, excluding None or empty values.
     
-    Parameters:
-    - dictionary (dict): Any dictionary
-    
-    Returns
-    - Boolean (bool) : True if not empty
-    """
-    
-    if not isinstance(dictionary, dict):
-        return True
-    
-    for value in dictionary.values():
-        if value is None:
-            continue
-        if isinstance(value, dict):
-            if value and has_valid_content(value):
-                return True
-        elif isinstance(value, (list, set)):
-            if value:
-                return True
-        else:
-            return True
-        
-    return False
-
-
-
-# Fancy Printing ==================================================================================
-def fancy_printing(inputted_dict, indent_level=0, is_top_level=False):
-    """
-    Fancy printing of any inputted dictionary with aligned colons and spaces between sections.
-    Only prints sections with non-empty, non-None values.
-    
-    Parameters:
-    - inputted_dict (dict) : Any dictionary
-    - indent_value (int)   : Recursive indentation
-    - is_top_level (bool)  : Flag to indicate top-level call for initial spacing
-    
-    Returns:
-    - Prints
+    Example:
+    >>> data = {
+    >>>     'Sections': [
+    >>>         {'Section Num': 1, 'Flow Type': 'Isentropic', 'V1': 240, 'P1': 170000, 'T1': 320, 'M1': 0.67, 'Tt1': 349, 'Pt1': 230000},
+    >>>         {'Section Num': 2, 'Flow Type': 'Isentropic', 'V2': 290, 'P2': 170000, 'Tt2': 349, 'T2': 307, 'Pt2': 211000}
+    >>>     ]
+    >>> }
     """
     
-    tab = "    "
+    def print_if_value(key, value, indent=0):
+        """
+        Prints only if the value is not None, empty string, or empty dictionary.
+        
+        Parameters:
+        - key (str)   : The key to print
+        - value       : The value to check and print
+        - indent (int): Number of  s for indentation
+        
+        Returns:
+        - Print Statements
+        """
+        if value is not None and value != "" and (not isinstance(value, dict) or value):
+            print(" " * indent + f"{key}: {value}")
     
-    if is_top_level and indent_level == 0:
-        print()  # Initial blank line for top-level call
+    def has_content(d):
+        """
+        Checks if a dictionary or value has meaningful content.
+        
+        Parameters:
+        - d : The value to check
+        
+        Returns:
+        - bool : True if content exists, False otherwise
+        """
+        if not isinstance(d, dict):
+            return bool(d is not None and d != "")
+        return any(has_content(v) for v in d.values())
     
-    valid_items = [(k, v) for k, v in inputted_dict.items() if has_valid_content(v)]
-    for i, (key, value) in enumerate(valid_items):
-        base_indent = tab * indent_level
+    # Extract sections from the dictionary
+    sections = data.get('Sections', [])
+    
+    # Check for nested 'Sections' in Misc
+    for section in sections:
+        if 'Misc' in section and 'Sections' in section['Misc']:
+            sections = section['Misc']['Sections']
+            break
+    
+    for section in sections:
+        # Start with  
+        print(" ")
         
-        if key == 'Sections' and isinstance(value, list):  # Special handling for 'Sections'
-            print(f"{base_indent}{key}:")
-            for j, section in enumerate(value):
-                if has_valid_content(section):
-                    print()  # Blank line before each section
-                    section_indent = tab * (indent_level + 1)
-                    for sub_key, sub_value in section.items():
-                        if sub_key == 'Section Num' and has_valid_content(sub_value):
-                            print(f"{section_indent}{sub_key}: {str(sub_value)}")
-                        elif has_valid_content(sub_value):
-                            if isinstance(sub_value, dict):
-                                print(f"{section_indent}{tab}{sub_key}:")
-                                fancy_printing(sub_value, indent_level + 2)
-                            else:
-                                print(f"{section_indent}{tab}{sub_key} : {str(sub_value)}")
-                
-        elif isinstance(value, dict):
-            print(f"{base_indent}{key}:")
-            fancy_printing(value, indent_level + 1)
-                
-        elif isinstance(value, (list, set)):
-            print(f"{base_indent}{key}:")
-            for item in value:
-                if isinstance(item, dict):
-                    fancy_printing(item, indent_level + 1)
-                else:
-                    print(f"{base_indent}{tab}{item}")
-                    
-        else:
-            print(f"{base_indent}{key} : {str(value)}")
+        # Section Num
+        section_num = section.get("Section Num")
+        print_if_value("Section Num", section_num)
         
-        if indent_level == 0 and i < len(valid_items) - 1:
-            print()  # Blank line between top-level sections
-
-    if indent_level == 0 and valid_items:
-        print()  # Final blank line for top-level call
+        # Flow Type
+        print_if_value("Flow Type", section.get("Flow Type"), 4)
         
+        # Machs (collect any key starting with 'M' and <= 3 chars)
+        machs = {k: v for k, v in section.items() if k.startswith('M') and len(k) <= 3}
+        if has_content(machs):
+            print(" " * 4 + "Machs:")
+            for key, value in machs.items():
+                print_if_value(key, value, 8)
         
+        # States (Temperature, Pressure, rho, Velocity)
+        states = {
+            "Temperature": {},
+            "Pressure": {},
+            "rho": {},
+            "Velocity": {}
+        }
+        for key, value in section.items():
+            if key.startswith('T') and not key.startswith('Tt'):
+                states["Temperature"][f"{key}{{section_num}}"] = value
+            elif key.startswith('Tt'):
+                states["Temperature"][f"{key}{{section_num}}"] = value
+            elif key.startswith('P') and not key.startswith('Pt'):
+                states["Pressure"][f"{key}{{section_num}}"] = value
+            elif key.startswith('Pt'):
+                states["Pressure"][f"{key}{{section_num}}"] = value
+            elif key.startswith('rho'):
+                states["rho"][f"{key}{{section_num}}"] = value
+            elif key.startswith('V'):
+                states["Velocity"][f"{key}{{section_num}}"] = value
+        
+        if any(has_content(states[cat]) for cat in states):
+            print(" " * 4 + "States:")
+            for category, values in states.items():
+                if has_content(values):
+                    print(" " * 8 + f"{category}:")
+                    for key, value in values.items():
+                        formatted_key = key.format(section_num=section_num)
+                        print_if_value(formatted_key, value, 12)
+        
+        # Misc (anything not categorized above)
+        misc = {k: v for k, v in section.items() 
+                if not (k in ['Section Num', 'Flow Type'] or k in machs or 
+                        any(k in states[cat] for cat in states))}
+        if has_content(misc):
+            print(" " * 4 + "Misc:")
+            for key, value in misc.items():
+                print_if_value(key, value, 8)
+        
+        # End with  
+        print(" ")

@@ -2,12 +2,11 @@
 3/16/25 ===========================================================================================
     Solutions -------------------------------------------------------------------------------------
         Figure out a way to check the global values in the file from another file
-        Make the prints better
-            Section 1: P2: 1 | P2: 3 | Error: 3%
+
 
     Fancy Printer ---------------------------------------------------------------------------------
-        Needs to print out two different formats
-        Needs to print correct values: V1, V2, ..., Vn
+        Need to add proper commenting style
+        Needs to print correct values: V1
             FORMAT 1:
                 Sections ==================================
                     0 - Isentropic
@@ -26,26 +25,3 @@
                     Pt2/Pt1: 2    Pt1/Pt0: 1    Pt1/Pt0: 1
 
                 ...
-
-            FORMAT 2:
-                Sections 0 ================================
-                    Flow Type: Isentropic
-                    Mach: 0
-                    P0: 0
-                    Pt0: 0
-                    T0: 0
-                    Tt0: 0
-
-                    ...
-
-            FORMAT 3: (HW)
-                Sections 0 ================================
-                    Flow Type: Isentropic
-                    My ANS     Correct ANS
-                    Mach: 0    Mach : 1
-                    P0: 0      P0: 1
-
-                    ...
-            
-
-        

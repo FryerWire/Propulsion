@@ -17,11 +17,10 @@ from Flow_Solvers.rayleigh_flow import rayleigh_flow_solver as rfs
 # Utilities ---------------------------------------------------------------------------------------
 from Utilities.unit_converter import unit_conversion as unit
 from Utilities.variable_mapping import variable_mapping as map
-from Utilities.fancy_printer import fancy_printing as fprint
+from Utilities.fancy_printer import section_printer as fprint
 
 # Problem Solvers ---------------------------------------------------------------------------------
 from Problem_Solvers.solutions import answer_checking as check
-
 
 
 # External Imports ================================================================================
@@ -47,4 +46,6 @@ TEST_2 = {
     ]
 }
                   
-print(check(TEST_1, TEST_2))
+# check(TEST_1, TEST_2)
+# print(map(TEST_1))
+fprint(map(TEST_1))

@@ -1,6 +1,63 @@
 
-Jet Propulsion Calculator 0.3.0 (3/16/2025)
+Jet Propulsion Calculator 0.3.1 (IN PROGRESS)
+===================================================================================================
+# Features
+- Recreated the 'answers.py' file
 
+# Updates
+- Made changes to the 'solutions.py' printing style
+    Section 2: MISMATCHING =========================
+        needs_checking: P2: 170000
+        answers_dict  : P2: 180
+        Percent Error :   : 94344.444%
+
+    Section 2: MISSING =============================
+        needs_checking: Z: None
+        answers_dict  : Z: 10
+
+- Made changes to the 'fancy_printer.py' printing style
+    Section Num: 1
+        Flow Type: Isentropic
+        Machs:
+            M1: 0.67
+        States:
+            Temperature:
+                T11: 320
+                Tt11: 349
+            Pressure:
+                P11: 170000
+                Pt11: 230000
+            Velocity:
+                V11: 240
+        Misc:
+            V1: 240
+            P1: 170000
+            T1: 320
+            Tt1: 349
+            Pt1: 230000
+    
+    Section Num: 2
+        Flow Type: Isentropic
+        States:
+            Temperature:
+                Tt22: 349
+                T22: 307
+            Pressure:
+                P22: 170000
+                Pt22: 211000
+            Velocity:
+                V22: 290
+        Misc:
+            V2: 290
+            P2: 170000
+            Tt2: 349
+            T2: 307
+            Pt2: 211000
+
+
+
+Jet Propulsion Calculator 0.3.0 (3/16/2025)
+===================================================================================================
 # Features
 - 'variable_mapping' function was updated to follow the new dictionary styling
 - 'Text Files' folder was created to organize code changes

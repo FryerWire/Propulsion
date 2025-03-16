@@ -12,49 +12,8 @@ Modification Date : 3/16/2025
 from Utilities.unit_converter import unit_conversion as units
 
 
-
-# Lecture Solutions ===============================================================================
-L3_SOL = {
-    'Sections' : [
-        {'Section Num': 1, 'Flow Type': 'Isentropic', 'V1': 240, 'P1': 170000, 'T1': 320, 'M1': 0.67, 'Tt1': 349, 'Pt1': 230000},
-        {'Section Num': 2, 'Flow Type': 'Isentropic', 'V2': 290, 'P2': 170000, 'Tt2': 349, 'T2': 307, 'Pt2': 211000}
-    ]
-}
-
-L4_SOL = {
-    'Sections' : [
-        {'Section Num': 0, 'Flow Type': 'Isentropic', 'M0': 1.8, 'P0': units(0.3, 'atm', 'Pa'), 'T0': 250, 'Pt0': units(1.724, 'atm', 'Pa'), 'Tt0': 412},
-        {'Section Num': 1, 'Flow Type': 'Normal', 'M1': 0.6165, 'Pt1': units(1.4, 'atm', 'Pa')},
-        {'Section Num': 2, 'Flow Type': 'Isentropic', 'Pt2': units(1.4, 'atm', 'Pa'), 'Tt2': 412, 'M2': 0.168, 'P2': units(1.373, 'atm', 'Pa'), 'T2': 410}
-    ]
-}
-
-
-
-# Quiz Solutions ==================================================================================
-Q1_SOL = {
-    'Sections' : [
-        {'Section Num': 1, 'Flow Type': 'Isentropic', 'T1': 288, 'P1': 100000, 'M1': 0.3, 'Tt1': 273.5},
-        {'Section Num': 2, 'Flow Type': 'Isentropic', 'M2': 0.6, 'Tt2': 273.5, 'P2': 48700}
-    ]
-}
-
-
-
-# Testing Solutions ===============================================================================
-TEST_1 = {
-    'Sections' : [
-        {'Section Num': 1, 'Flow Type': 'Isentropic', 'V1': 240, 'P1': 170000, 'T1': 320, 'M1': 0.67, 'Tt1': 349, 'Pt1': 230000},
-        {'Section Num': 2, 'Flow Type': 'Isentropic', 'V2': 290, 'P2': 170000, 'Tt2': 349, 'T2': 307, 'Pt2': 211000}
-    ]
-}
-
-TEST_2 = {
-    'Sections' : [
-        {'Section Num': 1, 'Flow Type': 'Isentropic', 'V1': 480, 'P1': 170000, 'T1': 320, 'M1': 0.67, 'Tt1': 349, 'Pt1': 738},
-        {'Section Num': 2, 'Flow Type': 'Isentropic', 'V2': 290, 'P2': 180, 'Tt2': 349, 'T2': 307, 'Pt2': 211000, 'Z': 10}
-    ]
-}
+# External Imports ================================================================================
+import numpy as np 
 
 
 
@@ -95,9 +54,12 @@ def answer_checking(needs_checking, answers):
         needs_checking_dict = needs_checking['Sections'][i]
         for key, value in ans_dict.items():
             if (key not in needs_checking_dict):
-                print("\nMissing Keys with 'answers_dict' with 'needs_checking_dict'!")
-                print(f"- {key} from Section {ans_dict.get('Section Num')} is missing!\n")  
-                          
+                print(f"\nSection {ans_dict.get('Section Num')}: MISSING =============================")
+                print(f"    needs_checking: {key}: {needs_checking_dict.get(key)}")
+                print(f"    answers_dict  : {key}: {ans_dict.get(key)}\n")
+
             elif (needs_checking_dict[key] != value):
-                print("\nMismatching Values of 'answers_dict' with 'needs_checking_dict'!")
-                print(f"- {key} from Section {ans_dict.get('Section Num')} do NOT match\n")
+                print(f"\nSection {ans_dict.get('Section Num')}: MISMATCHING =========================")
+                print(f"    needs_checking: {key}: {needs_checking_dict.get(key)}")
+                print(f"    answers_dict  : {key}: {ans_dict.get(key)}")
+                print(f"    Percent Error : {len(key) * ' '}: {round(np.abs((needs_checking_dict.get(key) - ans_dict.get(key)) / ans_dict.get(key)) * 100, 3)}%")
