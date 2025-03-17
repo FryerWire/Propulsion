@@ -20,8 +20,7 @@ from Utilities.variable_mapping import variable_mapping as map
 from Utilities.fancy_printer import section_printer as fprint
 
 # Problem Solvers ---------------------------------------------------------------------------------
-# from Problem_Solvers.solutions import answer_checking as check
-
+from Problem_Solvers.edu_checking_printer import answer_checking as eduprint
 
 # External Imports ================================================================================
 import numpy as np
@@ -32,13 +31,11 @@ import numpy as np
 gas_parameters = {'R': 287, 'g': 1.4, 'cp': 1004}
 
 
+checking = {'Sections': 
+                [
+                    {'Section Num': 1, 'Flow Type': 'Isentropic', 'V1': 241, 'P1': 180000, 'T1': 320, 'M1': 0.66, 'Tt1': 410, 'Pt1': 230000, 'Tt0': 410}, 
+                    {'Section Num': 2, 'Flow Type': 'Isentropic', 'V2': 290, 'P2': 170000, 'Tt2': 349, 'T2': 307, 'Pt2': 211000}
+                ]
+            }   
 
-
-
-
-
-                  
-# # check(TEST_1, TEST_2)
-# print(map(TEST_1))
-# # fprint(map(TEST_1))
-    
+eduprint(checking, 'L3')
