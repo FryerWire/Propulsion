@@ -1,6 +1,6 @@
 
 """
-Problem Solutions
+Checking Printer
 Start Date        : 3/16/2025
 Modification Date : 3/16/2025
 """
@@ -10,6 +10,9 @@ Modification Date : 3/16/2025
 # Local Imports ===================================================================================
 # Utilities ---------------------------------------------------------------------------------------
 from Utilities.unit_converter import unit_conversion as units
+
+# Problem Solvers ---------------------------------------------------------------------------------------
+from Problem_Solvers import class_answers as ans
 
 
 # External Imports ================================================================================

@@ -1,5 +1,29 @@
 
-Jet Propulsion Calculator 0.3.1 (IN PROGRESS)
+
+
+# Features
+Added a 'lecture' and 'quiz' function to the 'answers.py' file. 
+
+# Updates
+Changed 'solutions.py' to 'checking_printer.py'
+Changed 'class_answers.py' to 'class_answers.py'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Jet Propulsion Calculator 0.3.1 (3/16/2025)
 ===================================================================================================
 # Features
 - Recreated the 'answers.py' file
