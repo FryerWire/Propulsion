@@ -1,7 +1,9 @@
 
 3/16/25 ===========================================================================================
-    Solutions -------------------------------------------------------------------------------------
-        Figure out a way to check the global values in the file from another file
+    Edu Checking Printer --------------------------------------------------------------------------
+        Want to make a percent checking function.
+            If it is within +- (0% <= X <= 2.5%) then it will show a value warning
+            If it is within +- (2.5% < X <= 5%) then it will show a RaiseError value warning
 
 
     Fancy Printer ---------------------------------------------------------------------------------

@@ -8,47 +8,46 @@ Modification Date : 3/16/2025
 
 
 # Local Imports ===================================================================================
-# Utilities ---------------------------------------------------------------------------------------
-from Utilities.unit_converter import unit_conversion as units
-
-# Problem Solvers ---------------------------------------------------------------------------------------
-from Problem_Solvers import class_answers as ans
+# Problem Solvers ---------------------------------------------------------------------------------
+from Problem_Solvers import edu_answers as ans
 
 
 # External Imports ================================================================================
-import numpy as np 
+import numpy as np
 
 
 
 # Answer Checking Function ========================================================================
-def answer_checking(needs_checking, answers):
+def answer_checking(needs_checking, answer_call):
     """
     Compares the keys and values of two dictionaries.
     
     Parameters:
     - needs_checking (dict) : Dictionary of the unknown answered to be compared
-    - answers (dict)        : Dictionary of the true answers to be compared
-                            : L3_SOL, L4_SOL, Q1_SOL, TEST_1, and TEST_2
+    - answer_call (str)     : Inputs: L3, L4, Q1, TEST_1, and TEST_2
     
     Returns:
     - Print Statements : Prints the information regarding the comparison of the two dictionaries.
     
     Example:
-    >>> dict_A = {
-    >>>     'Sections' : [
-    >>>         {'Section Num': 1, 'Flow Type': 'Isentropic', 'V1': 240, 'P1': 170000, 'T1': 320, 'M1': 0.67, 'Tt1': 349, 'Pt1': 230000},
-    >>>         {'Section Num': 2, 'Flow Type': 'Isentropic', 'V2': 290, 'P2': 170000, 'Tt2': 349, 'T2': 307, 'Pt2': 211000}
-    >>>     ]
-    >>> }
-
-    >>> dict_B = {
-    >>>     'Sections' : [
-    >>>         {'Section Num': 1, 'Flow Type': 'Isentropic', 'V1': 480, 'P1': 170000, 'T1': 320, 'M1': 0.67, 'Tt1': 349, 'Pt1': 738},
-    >>>         {'Section Num': 2, 'Flow Type': 'Isentropic', 'V2': 290, 'P2': 180, 'Tt2': 349, 'T2': 307, 'Pt2': 211000}
-    >>>     ]
-    >>> }
+    >>> answer_checking(needs_checking, 'L3')
+    >>> answer_checking(needs_checking, 'L4')
     """
     
+    if (answer_call == 'L3'):
+        answers = ans.lecture(3)
+    elif (answer_call == 'L4'):
+        answers = ans.lecture(4)
+    elif (answer_call == 'Q1'):
+        answers = ans.quiz(1)
+    elif (answer_call == 'TEST_1'):
+        answers = ans.test(1)
+    elif (answer_call == 'TEST_2'):
+        answers = ans.test(2)
+    else:
+        print("Invalid answer call")
+        return None
+        
     for i, ans_dict in enumerate(answers.get('Sections', [])):
         if (i >= len(needs_checking.get('Sections', []))):
             print(f"\nSection {ans_dict.get('Section Num')} is missing in 'needs_checking' dict\n")
@@ -74,3 +73,4 @@ def answer_checking(needs_checking, answers):
                 print(f"    needs_checking: {needs_checking_dict.get(key)}")
                 print(f"    answers_dict  : {ans_dict.get(key)}")
                 print(f"    Percent Error : {round(np.abs((needs_checking_dict.get(key) - ans_dict.get(key)) / ans_dict.get(key)) * 100, 3)}%")
+    print()

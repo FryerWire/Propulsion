@@ -12,10 +12,6 @@ Modification Date : 3/16/2025
 from Utilities.unit_converter import unit_conversion as units
 
 
-# External Imports ================================================================================
-import numpy as np 
-
-
 
 # Lecture Solutions ===============================================================================
 def lecture(lecture_num):
@@ -92,17 +88,41 @@ def quiz(quiz_num):
 
 
 
-# # Testing Solutions ===============================================================================
-# TEST_1 = {
-#     'Sections' : [
-#         {'Section Num': 1, 'Flow Type': 'Isentropic', 'V1': 240, 'P1': 170000, 'T1': 320, 'M1': 0.67, 'Tt1': 349, 'Pt1': 230000},
-#         {'Section Num': 2, 'Flow Type': 'Isentropic', 'V2': 290, 'P2': 170000, 'Tt2': 349, 'T2': 307, 'Pt2': 211000}
-#     ]
-# }
+# Testing Solutions ===============================================================================
+def testing(testing_num):
+    """
+    The testing function takes in a testing number interger and returns the testing answer data.
+    
+    Parameters:
+    - testing_num (int): The testing number integer.
+                        Inputs: 1, 2
 
-# TEST_2 = {
-#     'Sections' : [
-#         {'Section Num': 1, 'Flow Type': 'Isentropic', 'V1': 480, 'P1': 170000, 'T1': 320, 'M1': 0.67, 'Tt1': 349, 'Pt1': 738},
-#         {'Section Num': 2, 'Flow Type': 'Isentropic', 'V2': 290, 'P2': 180, 'Tt2': 349, 'T2': 307, 'Pt2': 211000, 'Z': 10}
-#     ]
-# }
+    Returns:
+    - testing_list (dict): The testing answer data.
+    
+    Example:
+    >>> testing(1) -> TEST1_SOL
+    """
+    
+    testing_list = [
+        { # Quiz 1
+            'Sections' : [
+                {'Section Num': 1, 'Flow Type': 'Isentropic', 'V1': 240, 'P1': 170000, 'T1': 320, 'M1': 0.67, 'Tt1': 349, 'Pt1': 230000},
+                {'Section Num': 2, 'Flow Type': 'Isentropic', 'V2': 290, 'P2': 170000, 'Tt2': 349, 'T2': 307, 'Pt2': 211000}
+            ]
+        },
+        
+        { # Quiz 2
+            'Sections' : [
+                {'Section Num': 1, 'Flow Type': 'Isentropic', 'V1': 480, 'P1': 170000, 'T1': 320, 'M1': 0.67, 'Tt1': 349, 'Pt1': 738},
+                {'Section Num': 2, 'Flow Type': 'Isentropic', 'V2': 290, 'P2': 180, 'Tt2': 349, 'T2': 307, 'Pt2': 211000, 'Z': 10}
+            ]
+        }
+    ]
+
+    if (testing_num == 1):
+        return testing_list[0]
+    elif (testing_num == 2):
+        return testing_list[1]
+    else:    
+        return None
