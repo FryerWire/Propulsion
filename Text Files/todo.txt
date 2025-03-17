@@ -6,6 +6,50 @@
 
     Fancy Printer ---------------------------------------------------------------------------------
         Need to add proper commenting style
+
+        Fancy Flow Calculator has two bugs:
+            1. Same values in States and Misc
+            2. Repeated numbers in States, Ex: T11 and V11
+
+            Section Num: 1
+                Flow Type: Isentropic
+                Machs:
+                    M1: 0.67
+                States:
+                    Temperature:
+                        T11: 320
+                        Tt11: 349
+                    Pressure:
+                        P11: 170000
+                        Pt11: 230000
+                    Velocity:
+                        V11: 240
+                Misc:
+                    V1: 240
+                    P1: 170000
+                    T1: 320
+                    Tt1: 349
+                    Pt1: 230000
+            
+            
+            Section Num: 2
+                Flow Type: Isentropic
+                States:
+                    Temperature:
+                        Tt22: 349
+                        T22: 307
+                    Pressure:
+                        P22: 170000
+                        Pt22: 211000
+                    Velocity:
+                        V22: 290
+                Misc:
+                    V2: 290
+                    P2: 170000
+                    Tt2: 349
+                    T2: 307
+                    Pt2: 211000
+
         Needs to print correct values: V1
             FORMAT 1:
                 Sections ==================================

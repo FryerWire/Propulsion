@@ -46,6 +46,7 @@ TEST_2 = {
     ]
 }
                   
-check(TEST_1, TEST_2)
-# print(map(TEST_1))
+# check(TEST_1, TEST_2)
+print(map(TEST_1))
 # fprint(map(TEST_1))
+    
