@@ -9,7 +9,7 @@
 - Changed 'solutions.py' to 'edu_checking_printer.py'
 - Changed 'class_answers.py' to 'edu_answers.py'
 - 'edu_checking_printer.py':
-    - The 'answers_checking' function now accepts input from the 'edu_answers.py' file.
+    - The 'eduprint' function now accepts input from the 'edu_answers.py' file.
 - 'edu_answers.py':
     - Created a 'lectures', 'quiz', and 'testing' functions.
 

@@ -20,7 +20,7 @@ from Utilities.variable_mapping import variable_mapping as map
 from Utilities.fancy_printer import section_printer as fprint
 
 # Problem Solvers ---------------------------------------------------------------------------------
-from Problem_Solvers.edu_checking_printer import answer_checking as eduprint
+from Problem_Solvers.edu_checking_printer import eduprint
 
 # External Imports ================================================================================
 import numpy as np

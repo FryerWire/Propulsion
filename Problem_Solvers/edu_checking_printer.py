@@ -18,7 +18,7 @@ import numpy as np
 
 
 # Answer Checking Function ========================================================================
-def answer_checking(needs_checking, answer_call):
+def eduprint(needs_checking, answer_call):
     """
     Compares the keys and values of two dictionaries.
     
@@ -30,8 +30,8 @@ def answer_checking(needs_checking, answer_call):
     - Print Statements : Prints the information regarding the comparison of the two dictionaries.
     
     Example:
-    >>> answer_checking(needs_checking, 'L3')
-    >>> answer_checking(needs_checking, 'L4')
+    >>> eduprint(needs_checking, 'L3')
+    >>> eduprint(needs_checking, 'L4')
     """
     
     if (answer_call == 'L3'):
