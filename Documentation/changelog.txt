@@ -4,14 +4,20 @@
 
 ### Features
 - Added a 'lecture' and 'quiz' function to the 'answers.py' file. 
+- Added 'docs.txt' to the Documentation file
 
-### Updates
+### Changes
 - Changed 'solutions.py' to 'edu_checking_printer.py'
 - Changed 'class_answers.py' to 'edu_answers.py'
 - 'edu_checking_printer.py':
     - The 'eduprint' function now accepts input from the 'edu_answers.py' file.
 - 'edu_answers.py':
     - Created a 'lectures', 'quiz', and 'testing' functions.
+- Changed 'Changelogs' to 'Documentation'
+- Changed 'features.txt' to 'changelogs.txt'
+- Changed 'todo.txt' to 'upcoming.txt'
+
+### Bug Fixes
 
 
 
