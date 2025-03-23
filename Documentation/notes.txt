@@ -1,0 +1,8 @@
+
+Isentropic Pt2 = Pt1
+Normal Tt2 = Tt1
+
+Pt1/P1 = N
+
+N = Pt1/P1 -> P1 N = Pt1 -> P1 = Pt1 / N
+
