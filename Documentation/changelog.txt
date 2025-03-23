@@ -1,5 +1,19 @@
 
+# Jet Propulsion Calculator X.X.X
+===================================================================================================
+## 3/XX/2025
+
+### Features
+- Added 'A/A*' under 'section_ratios' in 'fancy_printer'
+
+### Changes
+- 'section_template' in 'variable_mapping.py' was updated to have 'None' instead of '{}' values.
+
+
+
+
 # Jet Propulsion Calculator 0.3.2
+===================================================================================================
 ## 3/21/2025
 
 ### Features
@@ -16,8 +30,6 @@
 - Changed 'Changelogs' to 'Documentation'
 - Changed 'features.txt' to 'changelogs.txt'
 - Changed 'todo.txt' to 'upcoming.txt'
-
-### Bug Fixes
 
 
 

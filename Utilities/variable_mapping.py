@@ -34,18 +34,18 @@ def variable_mapping(sections):
         'Machs': {},
 
         'States': {
-            'Temperature': {'T': {}, 'Tt': {}, 'T*': None, 'Tt*': None},
-            'Pressure': {'P': {}, 'Pt': {}, 'P*': None, 'Pt*': None},
-            'rho': {'rho': {}, 'rhot': {}, 'rho*': None, 'rhot*': None}
+            'Temperature': {'T': None, 'Tt': None, 'T*': None, 'Tt*': None},
+            'Pressure': {'P': None, 'Pt': None, 'P*': None, 'Pt*': None},
+            'rho': {'rho': None, 'rhot': None, 'rho*': None, 'rhot*': None}
         },
 
         'Thermo Ratio': {
-            'Temperature': {'T1/T0': {}, 'Tt1/Tt0': {}, 'T1/T*': {}, 'Tt1/Tt*': {}},
-            'Pressure': {'P1/P0': {}, 'Pt1/Pt0': {}, 'P1/P*': {}, 'Pt1/Pt*': {}},
-            'rho': {'rho1/rho0': {}, 'rhot1/rhot0': {}, 'rho1/rho*': {}, 'rhot1/rhot*': {}}
+            'Temperature': {'T1/T0': None, 'Tt1/Tt0': None, 'T1/T*': None, 'Tt1/Tt*': None},
+            'Pressure': {'P1/P0': None, 'Pt1/Pt0': None, 'P1/P*': None, 'Pt1/Pt*': None},
+            'rho': {'rho1/rho0': None, 'rhot1/rhot0': None, 'rho1/rho*': None, 'rhot1/rhot*': None}
         },
 
-        'Section Ratios': {'tau': {}, 'pi': {}},
+        'Section Ratios': {'tau': None, 'pi': None, 'A/A*': None},
         'Misc': {}
     }
 

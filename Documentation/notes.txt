@@ -6,3 +6,67 @@ Pt1/P1 = N
 
 N = Pt1/P1 -> P1 N = Pt1 -> P1 = Pt1 / N
 
+
+
+Section Num: 1
+    Flow Type: Isentropic
+    Machs:
+        M1: 0.66
+    States:
+        Temperature:
+        T1: 320
+        Tt1: 410
+        Tt0: 410
+        Pressure:
+        P1: 180000
+        Pt1: 230000
+        Velocity:
+        V1: 241
+
+
+Section Num: 2
+    Flow Type: Isentropic
+        A/A*: 3
+    States:
+        Temperature:
+        Tt2: 349
+        T2: 307
+        Pressure:
+        P2: 170000
+        Pt2: 211000
+        Velocity:
+        V2: 290
+    Misc:
+        A/A*: 3
+
+It should be this (all the whitespaces)
+
+Section Num: 1
+    Flow Type: Isentropic
+    Machs:
+        M1: 0.66
+    States:
+        Temperature:
+            T1: 320
+            Tt1: 410
+            Tt0: 410
+        Pressure:
+            P1: 180000
+            Pt1: 230000
+        Velocity:
+            V1: 241
+
+
+Section Num: 2
+    Flow Type: Isentropic
+    States:
+        Temperature:
+            Tt2: 349
+            T2: 307
+        Pressure:
+            P2: 170000
+            Pt2: 211000
+        Velocity:
+            V2: 290
+    Section Ratios:
+        A/A*: 3

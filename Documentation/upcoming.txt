@@ -30,19 +30,14 @@
                     M1: 0.67
                 States:
                     Temperature:
-                        T11: 320
-                        Tt11: 349
+                        T1: 320
+                        Tt1: 349
                     Pressure:
-                        P11: 170000
-                        Pt11: 230000
+                        P1: 170000
+                        Pt1: 230000
                     Velocity:
-                        V11: 240
-                Misc:
-                    V1: 240
-                    P1: 170000
-                    T1: 320
-                    Tt1: 349
-                    Pt1: 230000
+                        V1: 240
+
             
             
             Section Num: 2

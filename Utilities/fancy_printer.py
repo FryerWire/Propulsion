@@ -1,4 +1,3 @@
-
 """
 Fancy Printer
 Start Date        : 3/16/2025
@@ -86,31 +85,44 @@ def section_printer(data):
         }
         for key, value in section.items():
             if key.startswith('T') and not key.startswith('Tt'):
-                states["Temperature"][f"{key}{{section_num}}"] = value
+                states["Temperature"][key] = value  # Corrected key formatting
             elif key.startswith('Tt'):
-                states["Temperature"][f"{key}{{section_num}}"] = value
+                states["Temperature"][key] = value  # Corrected key formatting
             elif key.startswith('P') and not key.startswith('Pt'):
-                states["Pressure"][f"{key}{{section_num}}"] = value
+                states["Pressure"][key] = value  # Corrected key formatting
             elif key.startswith('Pt'):
-                states["Pressure"][f"{key}{{section_num}}"] = value
+                states["Pressure"][key] = value  # Corrected key formatting
             elif key.startswith('rho'):
-                states["rho"][f"{key}{{section_num}}"] = value
+                states["rho"][key] = value  # Corrected key formatting
             elif key.startswith('V'):
-                states["Velocity"][f"{key}{{section_num}}"] = value
-        
+                states["Velocity"][key] = value  # Corrected key formatting
+
+        # Correct indentation for States
         if any(has_content(states[cat]) for cat in states):
             print(" " * 4 + "States:")
             for category, values in states.items():
                 if has_content(values):
                     print(" " * 8 + f"{category}:")
                     for key, value in values.items():
-                        formatted_key = key.format(section_num=section_num)
-                        print_if_value(formatted_key, value, 12)
-        
+                        print_if_value(key, value, 12)
+
+        # Section Ratios (e.g., A/A*)
+        section_ratios = {
+            "A/A*": section.get("A/A*")
+        }
+        if has_content(section_ratios):
+            print(" " * 4 + "Section Ratios:")
+            for key, value in section_ratios.items():
+                print_if_value(key, value, 8)
+
         # Misc (anything not categorized above)
-        misc = {k: v for k, v in section.items() 
-                if not (k in ['Section Num', 'Flow Type'] or k in machs or 
-                        any(k in states[cat] for cat in states))}
+        categorized_keys = set().union(
+            *[states[cat].keys() for cat in states],
+            machs.keys(),
+            section_ratios.keys(),
+            {'Section Num', 'Flow Type'}
+        )
+        misc = {k: v for k, v in section.items() if k not in categorized_keys}
         if has_content(misc):
             print(" " * 4 + "Misc:")
             for key, value in misc.items():
