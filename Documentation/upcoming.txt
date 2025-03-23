@@ -1,5 +1,8 @@
 
 3/23/25 ===========================================================================================
+    Variable Mapping ------------------------------------------------------------------------------
+        Need to add A1/A* or just area information data
+
     Edu Checking Printer --------------------------------------------------------------------------
         Want to make a percent checking function.
             If it is within +- (0% <= X <= 2.5%) then it will show a value warning
