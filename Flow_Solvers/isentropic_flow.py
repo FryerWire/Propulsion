@@ -128,9 +128,10 @@ def iscentropic_flow_solver(input_var, input_value, g = 1.4):
     # Mach Number ----------------------------------------------------------------------------------
     if (input_var == 'M'):
         M = input_value
-        if M <= 0:
+        if (M <= 0):
             raise ValueError("M must be greater than 0")
-        regime = "Subsonic" if M < 1 else "Supersonic"
+        
+        regime = "Subsonic" if (M < 1) else "Supersonic"
         iscentropic_flow_data[regime]["M"] = M
 
     # Area Ratio -----------------------------------------------------------------------------------

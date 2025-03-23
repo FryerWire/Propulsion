@@ -1,6 +1,6 @@
 
-# Jet Propulsion Calculator X.X.X 
-## (XX/XX/XXXX)
+# Jet Propulsion Calculator 0.3.2
+## 3/21/2025
 
 ### Features
 - Added a 'lecture' and 'quiz' function to the 'answers.py' file. 

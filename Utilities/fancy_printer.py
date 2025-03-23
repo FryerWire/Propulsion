@@ -118,3 +118,20 @@ def section_printer(data):
         
         # End with  
         print(" ")
+
+
+# data = {
+#     'Sections': [
+#         {'Section Num': 1, 'Flow Type': 'Isentropic', 'V1': 240, 'P1': 170000, 'T1': 320, 'M1': 0.67, 'Tt1': 349, 'Pt1': 230000},
+#         {'Section Num': 2, 'Flow Type': 'Isentropic', 'V2': 290, 'P2': 170000, 'Tt2': 349, 'T2': 307, 'Pt2': 211000}
+#     ]
+# }
+
+# test = {'Section Num': 0, 'Flow Type': 'Isentropic', 'M': 1.8, 'P': 0.3, 'T': 250}
+# # section_printer(test)
+
+# data = {
+#     'Sections': [{'Section Num': 0, 'Flow Type': 'Isentropic', 'M': 1.8, 'P': 30397.5, 'T': 250, 'Pt': 174657.8432082955, 'Tt': 411.99999999999994}, {'Section Num': 1, 'Flow Type': 'Normal', 'M': 1.8, 'Pt': 141941.59964822943, 'Tt': 334.82572543465926}]
+# }
+
+# [{'Section Num': 0, 'Flow Type': 'Isentropic', 'M': 1.8, 'P': 30397.5, 'T': 250, 'Pt': 174657.8432082955, 'Tt': 411.99999999999994}, {'Section Num': 1, 'Flow Type': 'Normal', 'M': 1.8, 'Pt': 141941.59964822943, 'Tt': 334.82572543465926}]

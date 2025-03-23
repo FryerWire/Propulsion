@@ -1,5 +1,5 @@
 
-3/16/25 ===========================================================================================
+3/23/25 ===========================================================================================
     Edu Checking Printer --------------------------------------------------------------------------
         Want to make a percent checking function.
             If it is within +- (0% <= X <= 2.5%) then it will show a value warning
@@ -8,6 +8,14 @@
 
     Fancy Printer ---------------------------------------------------------------------------------
         Need to add proper commenting style
+
+        Issue:
+            CANNOT Input this: [{'Section Num': 0, 'Flow Type': 'Isentropic', 'M': 1.8, 'P': 30397.5, 'T': 250, 'Pt': 174657.8432082955, 'Tt': 411.99999999999994}, {'Section Num': 1, 'Flow Type': 'Normal', 'M': 1.8, 'Pt': 141941.59964822943, 'Tt': 334.82572543465926}]
+            CAN Input this: data = {
+                                'Sections': [{'Section Num': 0, 'Flow Type': 'Isentropic', 'M': 1.8, 'P': 30397.5, 'T': 250, 'Pt': 174657.8432082955, 'Tt': 411.99999999999994}, {'Section Num': 1, 'Flow Type': 'Normal', 'M': 1.8, 'Pt': 141941.59964822943, 'Tt': 334.82572543465926}]
+                            }
+
+            Need to fix input issue but current fix is the data = {'Sections': INPUT DATA HERE} fix
 
         Fancy Flow Calculator has two bugs:
             1. Same values in States and Misc
