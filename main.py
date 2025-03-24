@@ -39,4 +39,4 @@ checking = {'Sections':
 
 # eduprint(checking, 'L3')
 
-fprint(checking)
+# fprint(checking)
