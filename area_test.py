@@ -70,4 +70,76 @@ A3 / A* = 3.0000
 A5 / A* = 6.3000
 A6 / A* = 7.5600
 A9 / A* = 3.7800
+
+
+
+
+# Dictionary to store known A/A* values
+Initialize area_to_astar as an empty dictionary
+
+# Dictionary to store connections between sections
+Initialize connections as an empty dictionary
+
+# Function to add a known area ratio between two sections
+Function add_ratio(section_to, section_from, ratio):
+    If section_from is not in connections:
+        Add section_from to connections with an empty list
+    If section_to is not in connections:
+        Add section_to to connections with an empty list
+
+    # Add the forward ratio: A_to = ratio * A_from
+    Append (section_to, ratio) to connections[section_from]
+
+    # Add the backward ratio: A_from = (1/ratio) * A_to
+    Append (section_from, 1/ratio) to connections[section_to]
+
+# Function to compute all unknown A/A* values using known ones
+Function propagate_area_ratios(area_to_astar, connections):
+    Initialize queue as list of keys in area_to_astar
+    Set index i = 0
+
+    While i < length of queue:
+        Set current = queue[i]
+        Set current_val = area_to_astar[current]
+        Set neighbors = connections[current] (if any)
+
+        For each (neighbor, ratio) in neighbors:
+            If neighbor is not in area_to_astar:
+                Set area_to_astar[neighbor] = current_val * ratio
+                Append neighbor to queue
+
+        Increment i
+
+# Function to print out all A/A* values
+Function print_results(area_to_astar):
+    Print "--- Computed A/A* Values ---"
+    For each section in sorted keys of area_to_astar:
+        Print section + " / A* = " + area_to_astar[section] formatted to 4 decimal places
+
+# ---------------------
+# Example usage
+# ---------------------
+
+# Add known A/A* value
+Set area_to_astar["A1"] = 2.0
+
+# Add known ratios between sections
+Call add_ratio("A3", "A1", 1.5)
+Call add_ratio("A5", "A3", 2.1)
+Call add_ratio("A6", "A5", 1.2)
+Call add_ratio("A9", "A6", 0.5)
+
+# Compute all area ratios using propagation
+Call propagate_area_ratios(area_to_astar, connections)
+
+# Display the results
+Call print_results(area_to_astar)
+
+
+
+
+
+
+
+
 """
