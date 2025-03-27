@@ -1,3 +1,4 @@
+
 """
 Main Program
 Start Date        : 3/4/2025
@@ -33,10 +34,10 @@ gas_parameters = {'R': 287, 'g': 1.4, 'cp': 1004}
 checking = {'Sections': 
                 [
                     {'Section Num': 1, 'Flow Type': 'Isentropic', 'V1': 241, 'P1': 180000, 'T1': 320, 'M1': 0.66, 'Tt1': 410, 'Pt1': 230000, 'Tt0': 410}, 
-                    {'Section Num': 2, 'Flow Type': 'Isentropic', 'V2': 290, 'P2': 170000, 'Tt2': 349, 'T2': 307, 'Pt2': 211000, 'A/A*': 3}
+                    {'Section Num': 2, 'Flow Type': 'Isentropic', 'V2': 290, 'P2': 170000, 'Tt2': 349, 'T2': 307, 'Pt2': 211000, 'A/A*': 3, 'A1/A0': 2}
                 ]
             }   
 
 # eduprint(checking, 'L3')
 
-# fprint(checking)
+fprint(checking)

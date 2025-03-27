@@ -45,7 +45,7 @@ def variable_mapping(sections):
             'rho': {'rho1/rho0': None, 'rhot1/rhot0': None, 'rho1/rho*': None, 'rhot1/rhot*': None}
         },
 
-        'Section Ratios': {'tau': None, 'pi': None, 'A/A*': None},
+        'Section Ratios': {'tau': None, 'pi': None, 'A/A*': None, 'A1/A0': None},
         'Misc': {}
     }
 

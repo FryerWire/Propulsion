@@ -49,24 +49,29 @@ for i, section in enumerate(sections):
     M = section.get('M') 
     P = section.get('P')
     T = section.get('T')
+    A1_A0 = section.get('A1/A0')
     
-    print(f"\n\n{sections}\n\n")
+    # print(f"\n\n{sections}\n\n")
     # fprint(section)
     # print(section)
     
     # fprint({'Sections': [section]})
     
+    """
+    Try to find M from Area ratio
+    """
+    
     # Isentropic ----------------------------------------------------------------------------------
     if (flow_type == 'Isentropic'):
         if (M is not None):
-            # print(f"Section {section_num}: M is explicitly defined as {M}")
+            print(f"Section {section_num}: M is explicitly defined as {M}")
             pass
         else:
             if ((i > 0) and (sections[i - 1].get('M') is not None)):
                 M = sections[i - 1]['M']
-                # print(f"Section {section_num}: M is inherited from the previous section as {M}")
+                print(f"Section {section_num}: M is inherited from the previous section as {M}")
             else:
-                # print(f"Section {section_num}: M is not available")
+                print(f"Section {section_num}: M is not available")
                 continue  # Skip further calculations if M is not available
                 
         if (M < 1):
@@ -101,9 +106,9 @@ for i, section in enumerate(sections):
                 print(f"Section {section_num}: M1 is {M1}")
                 section['M'] = M1  # Append M to the current section
                 
-                # print(f"Section {section_num}: M is inherited from the previous section as {M}")
+                print(f"Section {section_num}: M is inherited from the previous section as {M}")
             else:
-                # print(f"Section {section_num}: M is not available")
+                print(f"Section {section_num}: M is not available")
                 pass
             
         # Pressure
@@ -136,8 +141,16 @@ for i, section in enumerate(sections):
         raise ValueError(f"Section {section_num}: Invalid flow type")
     
 # data = {
-#     'Sections': [{'Section Num': 0, 'Flow Type': 'Isentropic', 'M': 1.8, 'P': 30397.5, 'T': 250, 'Pt': 174657.8432082955, 'Tt': 411.99999999999994}, {'Section Num': 1, 'Flow Type': 'Normal', 'M': 1.8, 'Pt': 141941.59964822943, 'Tt': 334.82572543465926}]
+#     'Sections': [
+#         {'Section Num': 0, 'Flow Type': 'Isentropic', 'M': 1.8, 'P': 30397.5, 'T': 250, 'Pt': 174657.8432082955, 'Tt': 411.99999999999994}, 
+#         {'Section Num': 1, 'Flow Type': 'Normal', 'M': 1.8, 'Pt': 141941.59964822943, 'Tt': 334.82572543465926}]
 # }
+
+data = {
+    'Sections': [
+        {'Section Num': 0, 'Flow Type': 'Isentropic', 'M': 1.8, 'P': 30397.5, 'T': 250, 'Pt': 174657.8432082955, 'Tt': 411.99999999999994, 'A/A*': 3}
+    ]
+}
     
-# fprint(data)
+fprint(data)
 

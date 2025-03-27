@@ -4,7 +4,7 @@
 ## 3/XX/2025
 
 ### Features
-- Added 'A/A*' under 'section_ratios' in 'fancy_printer'
+- Added 'A/A*' and 'A1/A0' under 'section_ratios' in 'fancy_printer' and 'variable_mapping'
 
 ### Changes
 - 'section_template' in 'variable_mapping.py' was updated to have 'None' instead of '{}' values.

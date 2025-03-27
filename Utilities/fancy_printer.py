@@ -106,9 +106,10 @@ def section_printer(data):
                     for key, value in values.items():
                         print_if_value(key, value, 12)
 
-        # Section Ratios (e.g., A/A*)
+        # Section Ratios (e.g., A/A*, A1/A0)
         section_ratios = {
-            "A/A*": section.get("A/A*")
+            "A/A*": section.get("A/A*"),
+            "A1/A0": section.get("A1/A0")  # Added support for A1/A0
         }
         if has_content(section_ratios):
             print(" " * 4 + "Section Ratios:")

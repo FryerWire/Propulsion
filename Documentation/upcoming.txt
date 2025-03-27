@@ -1,8 +1,5 @@
 
-3/23/25 ===========================================================================================
-    Variable Mapping ------------------------------------------------------------------------------
-        Need to add A1/A* or just area information data
-
+3/26/25 ===========================================================================================
     Edu Checking Printer --------------------------------------------------------------------------
         Want to make a percent checking function.
             If it is within +- (0% <= X <= 2.5%) then it will show a value warning
@@ -19,44 +16,6 @@
                             }
 
             Need to fix input issue but current fix is the data = {'Sections': INPUT DATA HERE} fix
-
-        Fancy Flow Calculator has two bugs:
-            1. Same values in States and Misc
-            2. Repeated numbers in States, Ex: T11 and V11
-
-            Section Num: 1
-                Flow Type: Isentropic
-                Machs:
-                    M1: 0.67
-                States:
-                    Temperature:
-                        T1: 320
-                        Tt1: 349
-                    Pressure:
-                        P1: 170000
-                        Pt1: 230000
-                    Velocity:
-                        V1: 240
-
-            
-            
-            Section Num: 2
-                Flow Type: Isentropic
-                States:
-                    Temperature:
-                        Tt22: 349
-                        T22: 307
-                    Pressure:
-                        P22: 170000
-                        Pt22: 211000
-                    Velocity:
-                        V22: 290
-                Misc:
-                    V2: 290
-                    P2: 170000
-                    Tt2: 349
-                    T2: 307
-                    Pt2: 211000
 
         Needs to print correct values: V1
             FORMAT 1:
