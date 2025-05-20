@@ -1,6 +1,6 @@
 
 """
-Normal Shock Calculator
+Isentropic Flow Calculator
 Start Date        : 2/24/2025
 Modification Date : 3/4/2025
 """
@@ -116,7 +116,6 @@ def iscentropic_flow_solver(input_var, input_value, g = 1.4):
     
     Example:
     >>> iscentropic_flow_solver("M", 2)
-
     >>> print(iscentropic_flow_solver("M", 3, 1.4)["Supersonic"]["P1_Pt2"])
     """
 
