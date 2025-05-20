@@ -1,66 +1,72 @@
 
 """
-Isentropic Flow Calculator
-Start Date        : 2/24/2025
-Modification Date : 3/4/2025
+Isentropic Flow Solver
+Subclass of CompressibleFlow
 """
 
 
 
+# Imports =========================================================================================
+# Local Imports -----------------------------------------------------------------------------------
 import numpy as np
 from scipy.optimize import brentq
 
 
+# Global Imports ----------------------------------------------------------------------------------
+from Flow_Solvers.compressible_flow import CompressibleFlow
+
+
 
 # Isentropic Flow Relations ======================================================================
-def A_Astar(M, g):
-    term = (2 / (g + 1)) * (1 + ((g - 1) / 2) * (M ** 2))
-    return (1 / M) * (term ** ((g + 1) / (2 * (g - 1))))
+def A_Astar(M, gamma):
+    term = (2 / (gamma + 1)) * (1 + ((gamma - 1) / 2) * (M ** 2))
+    return (1 / M) * (term ** ((gamma + 1) / (2 * (gamma - 1))))
 
 # Pressure Ratios ---------------------------------------------------------------------------------
-def P_Pt(M, g):
-    return (1 + ((g - 1) / 2) * (M ** 2)) ** (-g / (g - 1))
+def P_Pt(M, gamma):
+    return (1 + ((gamma - 1) / 2) * (M ** 2)) ** (-gamma / (gamma - 1))
 
-def P_Pstar(M, g):
-    term_1 = 1 + ((g - 1) / 2) * (M ** 2)
-    term_2 = 1 + ((g - 1) / 2)  
-    return (term_2 / term_1) ** (g / (g - 1))  
+def P_Pstar(M, gamma):
+    term_1 = 1 + ((gamma - 1) / 2) * (M ** 2)
+    term_2 = 1 + ((gamma - 1) / 2)  
+    return (term_2 / term_1) ** (gamma / (gamma - 1))  
 
-def Pstar_P0(g):
-    return (2 / (g + 1)) ** (1 / (g - 1))
+def Pstar_P0(gamma):
+    return (2 / (gamma + 1)) ** (1 / (gamma - 1))
 
 # Density Ratios ----------------------------------------------------------------------------------
-def rho_rhot(M, g):
-    return (1 + ((g - 1) / 2) * (M ** 2)) ** (-1 / (g - 1))
+def rho_rhot(M, gamma):
+    return (1 + ((gamma - 1) / 2) * (M ** 2)) ** (-1 / (gamma - 1))
 
-def rho_rhostar(M, g):
-    term_1 = 1 + ((g - 1) / 2) * (M ** 2)
-    term_2 = 1 + ((g - 1) / 2) 
-    return (term_2 / term_1) ** (1 / (g - 1))  
+def rho_rhostar(M, gamma):
+    term_1 = 1 + ((gamma - 1) / 2) * (M ** 2)
+    term_2 = 1 + ((gamma - 1) / 2) 
+    return (term_2 / term_1) ** (1 / (gamma - 1))  
 
-def rhostar_rho0(g):
-    return (2 / (g + 1)) ** (1 / (g - 1))
+def rhostar_rho0(gamma):
+    return (2 / (gamma + 1)) ** (1 / (gamma - 1))
 
 # Temperature Ratios ------------------------------------------------------------------------------
-def T_Tt(M, g):
-    return (1 + ((g - 1) / 2) * (M ** 2)) ** (-1)
+def T_Tt(M, gamma):
+    return (1 + ((gamma - 1) / 2) * (M ** 2)) ** (-1)
 
-def T_Tstar(M, g):
-    term_1 = 1 + ((g - 1) / 2) * (M ** 2)
-    term_2 = 1 + ((g - 1) / 2)  
+def T_Tstar(M, gamma):
+    term_1 = 1 + ((gamma - 1) / 2) * (M ** 2)
+    term_2 = 1 + ((gamma - 1) / 2)  
     return term_2 / term_1
 
-def Tstar_T0(g):
-    return 2 / (g + 1)
+def Tstar_T0(gamma):
+    return 2 / (gamma + 1)
 
 # Angles ------------------------------------------------------------------------------------------
-def nu(M, g):
+def nu(M, gamma):
     if M < 1:
         return 0
     
-    term_1 = np.sqrt((g + 1) / (g - 1))
-    term_2 = np.arctan(np.sqrt(((g - 1) / (g + 1)) * ((M ** 2) - 1)))
+    term_1 = np.sqrt((gamma + 1) / (gamma - 1))
+    term_2 = np.arctan(np.sqrt(((gamma - 1) / (gamma + 1)) * ((M ** 2) - 1)))
     term_3 = np.arctan(np.sqrt((M ** 2) - 1))
+    
     return term_1 * term_2 - term_3
 
 def mu(M):
@@ -72,173 +78,165 @@ def mu(M):
 
 
 # brentq Function Solvers =========================================================================
-def SOLVE_M_from_A_Astar(M, target, g):
-    return A_Astar(M, g) - target
+def SOLVE_M_from_A_Astar(M, target, gamma):
+    return A_Astar(M, gamma) - target
 
-def SOLVE_M_from_P_Pt(M, target, g):
-    return P_Pt(M, g) - target
+# Pressure Ratios ---------------------------------------------------------------------------------
+def SOLVE_M_from_P_Pt(M, target, gamma):
+    return P_Pt(M, gamma) - target
 
-def SOLVE_M_from_P_Pstar(M, target, g):
-    return P_Pstar(M, g) - target
+def SOLVE_M_from_P_Pstar(M, target, gamma):
+    return P_Pstar(M, gamma) - target
 
-def SOLVE_M_from_rho_rhot(M, target, g):
-    return rho_rhot(M, g) - target
+# Density Ratios ----------------------------------------------------------------------------------
+def SOLVE_M_from_rho_rhot(M, target, gamma):
+    return rho_rhot(M, gamma) - target
 
-def SOLVE_M_from_rho_rhostar(M, target, g):
-    return rho_rhostar(M, g) - target
+def SOLVE_M_from_rho_rhostar(M, target, gamma):
+    return rho_rhostar(M, gamma) - target
 
-def SOLVE_M_from_T_Tt(M, target, g):
-    return T_Tt(M, g) - target
+# Temperature Ratios ------------------------------------------------------------------------------
+def SOLVE_M_from_T_Tt(M, target, gamma):
+    return T_Tt(M, gamma) - target
 
-def SOLVE_M_from_T_Tstar(M, target, g):
-    return T_Tstar(M, g) - target
+def SOLVE_M_from_T_Tstar(M, target, gamma):
+    return T_Tstar(M, gamma) - target
 
-def SOLVE_M_from_nu(M, target, g):
-    return nu(M, g) - target
+# Angles ------------------------------------------------------------------------------------------
+def SOLVE_M_from_nu(M, target, gamma):
+    return nu(M, gamma) - target
 
 def SOLVE_M_from_mu(M, target):
     return mu(M) - target
 
 
 
-# Isentropic Flow Calculator =====================================================================
-def iscentropic_flow_solver(input_var, input_value, g = 1.4):
+# Isentropic Flow Subclass of Compressible Flow ===================================================
+class IsentropicFlow(CompressibleFlow):
     """
-    Calculates all isentropic flow values given any input.
+    IsentropicFlow is the child class of CompressibleFlow.
+    Computes the isentropic flow properties from any given input. 
     
-    Parameters:
-    - input_var (string)  : 'M', 'A_Astar', 'P_Pt', 'P_Pstar', 'rho_rhot', 'rho_rhostar', 'T_Tt', 'T_Tstar', 'nu', 'mu'.
-    - input_value (float) : Any positive float value.
-    - g (float)           : Heat capacity ratio (default 1.4 for air).
+    Attributes:
+    - Inherits from CompressibleFlow superclass.
     
-    Returns:
-    - iscentropic_flow_data (dict) : Dictionary of all the values for isentropic flow.
-    
-    Example:
-    >>> iscentropic_flow_solver("M", 2)
-    >>> print(iscentropic_flow_solver("M", 3, 1.4)["Supersonic"]["P1_Pt2"])
+    Methods:
+    - computation() : Computes all isentropic flow values. 
+    - __getattr__() : Creates attributes to any given variable. 
     """
-
-    M_min = 1e-6
-    M_max = 100
-
-    iscentropic_flow_data = {"Subsonic": {}, "Supersonic": {}}
     
-    # Mach Number ----------------------------------------------------------------------------------
-    if (input_var == 'M'):
-        M = input_value
-        if (M <= 0):
-            raise ValueError("M must be greater than 0")
+    def computation(self) -> None:
+        """
+        Computes flow properties from the 'input_var' and 'input_val'.
+        Data is stored in the 'self.results' attribute.
         
-        regime = "Subsonic" if (M < 1) else "Supersonic"
-        iscentropic_flow_data[regime]["M"] = M
-
-    # Area Ratio -----------------------------------------------------------------------------------
-    elif (input_var == 'A_Astar'):
-        if (input_value <= 1):
-            raise ValueError("A/A* must be greater than 1")
+        Raises:
+        - ValueError : Unknown input_var
+        """
         
-        M_subsonic = brentq(SOLVE_M_from_A_Astar, M_min, 0.999999, args = (input_value, g))
-        M_supersonic = brentq(SOLVE_M_from_A_Astar, 1.000001, M_max, args = (input_value, g))
+        gamma     : float = self.gamma
+        input_var : str = self.input_var
+        input_val : float = self.input_val
+        mach_min  : float = 1e-6
+        mach_max  : float = 1e6
+        data      : dict[str, dict[str, float]] = {'Subsonic': {}, 'Supersonic': {}}
+                
         
-        # Subsonic Solution
-        iscentropic_flow_data["Subsonic"]["M"] = M_subsonic
-        iscentropic_flow_data["Subsonic"]["A_Astar"] = A_Astar(M_subsonic, g)
-        iscentropic_flow_data["Subsonic"]["P_Pt"] = P_Pt(M_subsonic, g)
-        iscentropic_flow_data["Subsonic"]["P_Pstar"] = P_Pstar(M_subsonic, g)
-        iscentropic_flow_data["Subsonic"]["rho_rhot"] = rho_rhot(M_subsonic, g)
-        iscentropic_flow_data["Subsonic"]["rho_rhostar"] = rho_rhostar(M_subsonic, g)
-        iscentropic_flow_data["Subsonic"]["T_Tt"] = T_Tt(M_subsonic, g)
-        iscentropic_flow_data["Subsonic"]["T_Tstar"] = T_Tstar(M_subsonic, g)
-        iscentropic_flow_data["Subsonic"]["nu"] = nu(M_subsonic, g)
-        iscentropic_flow_data["Subsonic"]["mu"] = mu(M_subsonic)
+        # Flow Solvers ----------------------------------------------------------------------------
+        # Mach ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        if (input_var == 'M'):
+            self.mach: float = input_val
+            flow_regime: str = 'Subsonic' if (self.mach < 1) else 'Supersonic'
+            data[flow_regime]['M'] = self.mach
         
-        # Supersonic Solution
-        iscentropic_flow_data["Supersonic"]["M"] = M_supersonic
-        iscentropic_flow_data["Supersonic"]["A_Astar"] = A_Astar(M_supersonic, g)
-        iscentropic_flow_data["Supersonic"]["P_Pt"] = P_Pt(M_supersonic, g)
-        iscentropic_flow_data["Supersonic"]["P_Pstar"] = P_Pstar(M_supersonic, g)
-        iscentropic_flow_data["Supersonic"]["rho_rhot"] = rho_rhot(M_supersonic, g)
-        iscentropic_flow_data["Supersonic"]["rho_rhostar"] = rho_rhostar(M_supersonic, g)
-        iscentropic_flow_data["Supersonic"]["T_Tt"] = T_Tt(M_supersonic, g)
-        iscentropic_flow_data["Supersonic"]["T_Tstar"] = T_Tstar(M_supersonic, g)
-        iscentropic_flow_data["Supersonic"]["nu"] = nu(M_supersonic, g)
-        iscentropic_flow_data["Supersonic"]["mu"] = mu(M_supersonic)
+        # Area ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        elif (input_var == 'A_Astar'):
+            M_sub: float = brentq(SOLVE_M_from_A_Astar, mach_min, 0.999999, args = (input_val, gamma))
+            M_sup: float = brentq(SOLVE_M_from_A_Astar, 1.000001, mach_max, args = (input_val, gamma))
+            data['Subsonic']['M'] = M_sub
+            data['Supersonic']['M'] = M_sup
 
-    # Pressure Ratios ------------------------------------------------------------------------------
-    elif (input_var == 'P_Pt'):
-        if not (0 < input_value < 1):
-            raise ValueError("0 < P/Pt < 1")
-        M = brentq(SOLVE_M_from_P_Pt, M_min, M_max, args = (input_value, g))
-        regime = "Subsonic" if M < 1 else "Supersonic"
-        iscentropic_flow_data[regime]["M"] = M
+        # Pressure ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        elif (input_var == 'P_Pt'):
+            self.mach: float = brentq(SOLVE_M_from_P_Pt, mach_min, mach_max, args = (input_val, gamma))
+            flow_regime: str = 'Subsonic' if (self.mach < 1) else 'Supersonic'
+            data[flow_regime]['M'] = self.mach
 
-    elif (input_var == 'P_Pstar'):
-        if (input_value <= 0):
-            raise ValueError("P/P* must be positive")
-        M = brentq(SOLVE_M_from_P_Pstar, M_min, M_max, args = (input_value, g))
-        regime = "Subsonic" if M < 1 else "Supersonic"
-        iscentropic_flow_data[regime]["M"] = M
+        elif (input_var == 'P_Pstar'):
+            self.mach: float = brentq(SOLVE_M_from_P_Pstar, mach_min, mach_max, args = (input_val, gamma))
+            flow_regime: str = 'Subsonic' if (self.mach < 1) else 'Supersonic'
+            data[flow_regime]['M'] = self.mach
 
-    # Density Ratios ------------------------------------------------------------------------------
-    elif (input_var == 'rho_rhot'):
-        if not (0 < input_value < 1):
-            raise ValueError("0 < rho/rho_t < 1")
-        M = brentq(SOLVE_M_from_rho_rhot, M_min, M_max, args = (input_value, g))
-        regime = "Subsonic" if M < 1 else "Supersonic"
-        iscentropic_flow_data[regime]["M"] = M
+        # Density +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        elif (input_var == 'rho_rhot'):
+            self.mach: float = brentq(SOLVE_M_from_rho_rhot, mach_min, mach_max, args = (input_val, gamma))
+            flow_regime: str = 'Subsonic' if (self.mach < 1) else 'Supersonic'
+            data[flow_regime]['M'] = self.mach
 
-    elif (input_var == 'rho_rhostar'):
-        if (input_value <= 0):
-            raise ValueError("rho/rho* must be positive")
-        M = brentq(SOLVE_M_from_rho_rhostar, M_min, M_max, args = (input_value, g))
-        regime = "Subsonic" if M < 1 else "Supersonic"
-        iscentropic_flow_data[regime]["M"] = M
+        elif (input_var == 'rho_rhostar'):
+            self.mach: float = brentq(SOLVE_M_from_rho_rhostar, mach_min, mach_max, args = (input_val, gamma))
+            flow_regime: str = 'Subsonic' if (self.mach < 1) else 'Supersonic'
+            data[flow_regime]['M'] = self.mach
 
-    # Temperature Ratios --------------------------------------------------------------------------
-    elif (input_var == 'T_Tt'):
-        if not (0 < input_value < 1):
-            raise ValueError("0 < T/Tt < 1")
-        M = brentq(SOLVE_M_from_T_Tt, M_min, M_max, args = (input_value, g))
-        regime = "Subsonic" if M < 1 else "Supersonic"
-        iscentropic_flow_data[regime]["M"] = M
+        # Temperature +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        elif (input_var == 'T_Tt'):
+            self.mach: float = brentq(SOLVE_M_from_T_Tt, mach_min, mach_max, args = (input_val, gamma))
+            flow_regime: str = 'Subsonic' if (self.mach < 1) else 'Supersonic'
+            data[flow_regime]['M'] = self.mach
 
-    elif (input_var == 'T_Tstar'):
-        if (input_value <= 0):
-            raise ValueError("T/T* must be positive")
-        M = brentq(SOLVE_M_from_T_Tstar, M_min, M_max, args = (input_value, g))
-        regime = "Subsonic" if M < 1 else "Supersonic"
-        iscentropic_flow_data[regime]["M"] = M
+        elif (input_var == 'T_Tstar'):
+            self.mach: float = brentq(SOLVE_M_from_T_Tstar, mach_min, mach_max, args = (input_val, gamma))
+            flow_regime: str = 'Subsonic' if (self.mach < 1) else 'Supersonic'
+            data[flow_regime]['M'] = self.mach
 
-    # Angles --------------------------------------------------------------------------------------
-    elif (input_var == 'nu'):
-        if (input_value <= 0):
-            raise ValueError("nu must be positive")
-        M = brentq(SOLVE_M_from_nu, 1, M_max, args = (input_value, g))
-        regime = "Supersonic"  
-        iscentropic_flow_data[regime]["M"] = M
+        # Angles ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        elif (input_var == 'nu'):
+            self.mach: float = brentq(SOLVE_M_from_nu, 1, mach_max, args = (input_val, gamma))
+            data['Supersonic']['M'] = self.mach
 
-    elif (input_var == 'mu'):
-        if not (0 < input_value < np.pi / 2):
-            raise ValueError("0 < mu < pi/2")
-        M = brentq(SOLVE_M_from_mu, 1, M_max, args = (input_value,))
-        regime = "Supersonic"  
-        iscentropic_flow_data[regime]["M"] = M
-    
-    else:
-        raise ValueError("Unknown input variable. Use 'M', 'A_Astar', 'P_Pt', 'P_Pstar', 'rho_rhot', 'rho_rhostar', 'T_Tt', 'T_Tstar', 'nu', or 'mu'.")
+        elif (input_var == 'mu'):
+            self.mach: float = brentq(SOLVE_M_from_mu, 1, mach_max, args = (input_val,))
+            data['Supersonic']['M'] = self.mach
 
-    for regime in ["Subsonic", "Supersonic"]:
-        if "M" in iscentropic_flow_data[regime]:
-            M = iscentropic_flow_data[regime]["M"]
-            iscentropic_flow_data[regime]["A_Astar"] = A_Astar(M, g)
-            iscentropic_flow_data[regime]["P_Pt"] = P_Pt(M, g)
-            iscentropic_flow_data[regime]["P_Pstar"] = P_Pstar(M, g)
-            iscentropic_flow_data[regime]["rho_rhot"] = rho_rhot(M, g)
-            iscentropic_flow_data[regime]["rho_rhostar"] = rho_rhostar(M, g)
-            iscentropic_flow_data[regime]["T_Tt"] = T_Tt(M, g)
-            iscentropic_flow_data[regime]["T_Tstar"] = T_Tstar(M, g)
-            iscentropic_flow_data[regime]["nu"] = nu(M, g)
-            iscentropic_flow_data[regime]["mu"] = mu(M)
+        else:
+            raise ValueError(f'Unknown input_var: {input_var}')
 
-    return iscentropic_flow_data
+
+        # Data Organiztion ------------------------------------------------------------------------
+        for flow_regime in ['Subsonic', 'Supersonic']:
+            if ('M' in data[flow_regime]):
+                data[flow_regime]['M'] = float(self.mach)
+                data[flow_regime]['A_Astar'] = float(A_Astar(self.mach, gamma))
+                data[flow_regime]['P_Pt'] = float(P_Pt(self.mach, gamma))
+                data[flow_regime]['P_Pstar'] = float(P_Pstar(self.mach, gamma))
+                data[flow_regime]['rho_rhot'] = float(rho_rhot(self.mach, gamma))
+                data[flow_regime]['rho_rhostar'] = float(rho_rhostar(self.mach, gamma))
+                data[flow_regime]['T_Tt'] = float(T_Tt(self.mach, gamma))
+                data[flow_regime]['T_Tstar'] = float(T_Tstar(self.mach, gamma))
+                data[flow_regime]['nu'] = float(nu(self.mach, gamma))
+                data[flow_regime]['mu'] = float(mu(self.mach))
+                
+        self.results = data
+        
+        
+        
+    def __getattr__(self, attribute_title: str) -> float:
+        """
+        Creates decorators for each flow property. 
+        
+        Parameter:
+        - attribute_title (str) : Attribute title
+
+        Raises:
+        - AttributeError if name not found in any regime.
+        
+        Examples:
+        >>> IF.P_Pt
+        >>> IF.T_Tt
+        """
+        
+        for regime in self.results.values():
+            if (attribute_title in regime):
+                return regime[attribute_title]
+            
+        raise AttributeError(f"'{self.__class__.__name__}' has no attribute '{attribute_title}'")

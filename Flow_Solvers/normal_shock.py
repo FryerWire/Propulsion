@@ -13,7 +13,7 @@ from scipy.optimize import brentq
 
 
 # Global Imports ----------------------------------------------------------------------------------
-from compressible_flow import CompressibleFlow
+from Flow_Solvers.compressible_flow import CompressibleFlow
 
 
 
@@ -106,58 +106,58 @@ class NormalShock(CompressibleFlow):
         
         # Flow Solvers ----------------------------------------------------------------------------
         # Mach ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        if (input_var == "M"):
+        if (input_var == 'M'):
             self.mach = input_val
             if (self.mach <= 1.0):
-                raise ValueError("M > 1")
+                raise ValueError('M > 1')
             
-        elif (input_var == "M2"):
+        elif (input_var == 'M2'):
             if (input_val >= 1):
-                raise ValueError("0 < M2 < 1")
+                raise ValueError('0 < M2 < 1')
             
             self.mach = brentq(SOLVE_M_from_M2, mach_min, mach_max, args = (input_val, gamma))        
         
         # Pressure ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        elif (input_var == "Pt2_Pt1"):
+        elif (input_var == 'Pt2_Pt1'):
             if (not 0 < input_val < 1):
-                raise ValueError("0 < Pt2_Pt1 < 1")
+                raise ValueError('0 < Pt2_Pt1 < 1')
             
             self.mach = brentq(SOLVE_M_from_Pt2_Pt1, mach_min, mach_max, args = (input_val, gamma))
             
-        elif (input_var == "P2_P1"):
+        elif (input_var == 'P2_P1'):
             if (input_val < 1):
-                raise ValueError("P2_P1 > 1")
+                raise ValueError('P2_P1 > 1')
             
             self.mach = brentq(SOLVE_M_from_P2_P1, mach_min, mach_max, args = (input_val, gamma))
             
-        elif (input_var == "Pt1_P1"):
+        elif (input_var == 'Pt1_P1'):
             if (input_val < 1):
-                raise ValueError("Pt1_P1 >= 1")
+                raise ValueError('Pt1_P1 >= 1')
             
             self.mach = brentq(SOLVE_M_from_Pt1_P1, mach_min, mach_max, args = (input_val, gamma))
             
-        elif (input_var == "P1_Pt2"):
+        elif (input_var == 'P1_Pt2'):
             if (input_val >= 1):
-                raise ValueError("0 < P1_Pt2 < 1")
+                raise ValueError('0 < P1_Pt2 < 1')
             
             self.mach = brentq(SOLVE_M_from_P1_Pt2, mach_min, mach_max, args = (input_val, gamma))    
         
         # Temperature +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        elif (input_var == "T2_T1"):
+        elif (input_var == 'T2_T1'):
             if (input_val < 1):
-                raise ValueError("T2_T1 > 1")
+                raise ValueError('T2_T1 > 1')
             
             self.mach = brentq(SOLVE_M_from_T2_T1, mach_min, mach_max, args = (input_val, gamma))
             
         # Density +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        elif (input_var == "rho2_rho1"):
+        elif (input_var == 'rho2_rho1'):
             if (input_val < 1):
-                raise ValueError("rho2_rho1 > 1")
+                raise ValueError('rho2_rho1 > 1')
             
             self.mach = brentq(SOLVE_M_from_rho2_rho1, mach_min, mach_max, args = (input_val, gamma))
             
         else:
-            raise ValueError("Unknown input variable. Use 'M', 'M2', 'Pt2_Pt1', 'T2_T1', 'P2_P1', or 'rho2_rho1'.")
+            raise ValueError(f'Unknown input_var: {input_var}')
 
 
         # Data Organization -----------------------------------------------------------------------

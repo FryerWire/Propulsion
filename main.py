@@ -12,11 +12,15 @@
 # print(IF)
 
 
-from normal_shock import NormalShock
+# from normal_shock import NormalShock
 
-NS = NormalShock('M', 2)
+# NS = NormalShock('M', 2)
 
-print(NS)
+# print(NS)
 
 
 
+from fanno_flow import FannoFlow
+
+FF = FannoFlow('M', 3)
+print(FF)
