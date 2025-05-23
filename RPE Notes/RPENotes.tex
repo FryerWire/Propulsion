@@ -1,0 +1,79 @@
+
+\documentclass[12pt]{article}
+\usepackage[margin = 1in]{geometry}
+\usepackage{amsmath}
+
+
+
+\begin{document}
+
+
+
+% Equations =======================================================================================
+\section*{Equations}
+
+\textbf{Total Impulse}
+Thrust force integrated over the time of application.
+\begin{equation}
+    I_t = \int_{0}^{t}F\,dt 
+\end{equation}
+
+\bigskip
+\noindent
+\textbf{Specific Impulse:}
+Thrust per unit propellant `weight' flow rate. 
+\begin{equation}
+    I_S = \frac{\int_{0}^{t}F\,dt }{g_0\int_{0}^{t}\dot{m}\,dt} = \frac{I_t}{w} 
+\end{equation}
+
+\bigskip
+\noindent
+\textbf{Total Propellant Weight:}
+\begin{equation}
+    w = m_p g_0
+\end{equation}
+
+\bigskip
+\noindent
+\textbf{Weight Flow Rate:}
+\begin{equation}
+    \dot{w} = \dot{m}_p g_0
+\end{equation}
+
+\bigskip
+\noindent
+\textbf{Effectice Exhaust Velocity: }
+An average or mass-equivalent velocity at which propellant is being ejected from the nozzle.
+\begin{equation}
+    c = I_S g_0 = \frac{F}{\dot{m}}
+\end{equation}
+
+\bigskip
+\noindent
+\textbf{Mass Ratio:}
+Ratio of the final mass over the initial mass. 
+\begin{equation}
+    \mathbf{M}\mathbf{R} = \frac{m_f}{m_0}
+\end{equation}
+
+
+
+% Symbols =========================================================================================
+\section*{Symbols}
+
+\begin{tabbing}
+\hspace{2cm} \= \hspace{7cm} \= \kill
+    $I_t$                  \> Total Impulse                   \> N $\cdot$ s \\
+    $I_S$                  \> Specific Impulse                \> s           \\
+    $m_p$                  \> Total Effective Propellant Mass \> kg          \\
+    $w$                    \> Effectice Propellant Weight     \> N           \\
+    $\dot{m}$              \> Total Mass Flow Rate            \> kg / s      \\
+    $\dot{w}$              \> Weight Flow Rate                \> N / s       \\
+    $g_0$                  \> Earth's Average Gravity         \> kg / $s^2$  \\
+    $c$                    \> Effectice Exhaust Velocity      \> m / s       \\
+    $\mathbf{M}\mathbf{R}$ \> Mass Ratio                      \> Unitless    \\
+    $m_f$                  \> Final Mass                      \> kg          \\
+    $m_0$                  \> Initial Mass                    \> kg          \\
+\end{tabbing}
+
+\end{document}
