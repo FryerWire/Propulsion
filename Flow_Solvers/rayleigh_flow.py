@@ -1,164 +1,210 @@
 
 """
 Rayleigh Flow Calculator
-Start Date        : 3/4/2025
-Modification Date : 3/4/2025
+Subclass of CompressibleFlow
 """
 
 
 
+# Imports =========================================================================================
+# Local Imports -----------------------------------------------------------------------------------
 from scipy.optimize import brentq
+
+
+# Global Imports ----------------------------------------------------------------------------------
+from Flow_Solvers.compressible_flow import CompressibleFlow
 
 
 
 # Rayleigh Flow Relations ========================================================================
-def P_Pstar(M, g):
-    return (g + 1) / (1 + g * M**2)
+def u_ustar(M, gamma):
+    return ((gamma + 1) * M**2) / (1 + gamma * M**2)
 
-def rho_rhostar(M, g):
-    return (1 + g * M**2) / ((g + 1) * M**2)
+# Pressure Ratios ---------------------------------------------------------------------------------
+def P_Pstar(M, gamma):
+    return (gamma + 1) / (1 + gamma * M**2)
 
-def T_Tstar(M, g):
-    return ((g + 1)**2 * M**2) / (1 + g * M**2)**2
-
-def u_ustar(M, g):
-    return ((g + 1) * M**2) / (1 + g * M**2)
-
-def Pt_Ptstar(M, g):
-    term_1 = ((g + 1) / (1 + g * M**2))
-    term_2 = ((2 / (g + 1)) * (1 + ((g - 1) / 2) * M**2))**(g / (g - 1))
+def Pt_Ptstar(M, gamma):
+    term_1 = ((gamma + 1) / (1 + gamma * M**2))
+    term_2 = ((2 / (gamma + 1)) * (1 + ((gamma - 1) / 2) * M**2))**(gamma / (gamma - 1))
     return term_1 * term_2
 
-def Tt_Ttstar(M, g):
-    term_1 = ((2 * ((g + 1) * M**2)) / (1 + g * M**2)**2)
-    term_2 = (1 + ((g - 1) / 2) * M**2)
+# Density Ratios ----------------------------------------------------------------------------------
+def rho_rhostar(M, gamma):
+    return (1 + gamma * M**2) / ((gamma + 1) * M**2)
+
+# Temperature Ratios ------------------------------------------------------------------------------
+def T_Tstar(M, gamma):
+    return ((gamma + 1)**2 * M**2) / (1 + gamma * M**2)**2
+
+def Tt_Ttstar(M, gamma):
+    term_1 = ((2 * ((gamma + 1) * M**2)) / (1 + gamma * M**2)**2)
+    term_2 = (1 + ((gamma - 1) / 2) * M**2)
     return term_1 * term_2
 
 
 
 # brentq Function Solvers ========================================================================
-def SOLVE_M_from_P_Pstar(M, target, g):
-    return P_Pstar(M, g) - target
+def SOLVE_M_from_u_ustar(M, target, gamma):
+    return u_ustar(M, gamma) - target
 
-def SOLVE_M_from_rho_rhostar(M, target, g):
-    return rho_rhostar(M, g) - target
+# Pressure Ratios ---------------------------------------------------------------------------------
+def SOLVE_M_from_P_Pstar(M, target, gamma):
+    return P_Pstar(M, gamma) - target
 
-def SOLVE_M_from_T_Tstar(M, target, g):
-    return T_Tstar(M, g) - target
+def SOLVE_M_from_Pt_Ptstar(M, target, gamma):
+    return Pt_Ptstar(M, gamma) - target
 
-def SOLVE_M_from_u_ustar(M, target, g):
-    return u_ustar(M, g) - target
+# Density Ratios ----------------------------------------------------------------------------------
+def SOLVE_M_from_rho_rhostar(M, target, gamma):
+    return rho_rhostar(M, gamma) - target
 
-def SOLVE_M_from_Pt_Ptstar(M, target, g):
-    return Pt_Ptstar(M, g) - target
+# Temperature Ratios ------------------------------------------------------------------------------
+def SOLVE_M_from_T_Tstar(M, target, gamma):
+    return T_Tstar(M, gamma) - target
 
-def SOLVE_M_from_Tt_Ttstar(M, target, g):
-    return Tt_Ttstar(M, g) - target
+def SOLVE_M_from_Tt_Ttstar(M, target, gamma):
+    return Tt_Ttstar(M, gamma) - target
 
 
 
-# Rayleigh Flow Calculator =======================================================================
-def rayleigh_flow_solver(input_var, input_value, g = 1.4):
+# Rayleigh Flow Subclass of Compressible Flow =====================================================
+class RayleighFlow(CompressibleFlow):
     """
-    Calculates all Rayleigh flow values given any input.
+    RayleighFlow is the child class of CompressibleFlow.
+    Computes the Rayleigh flow properties from any given input. 
     
-    Parameters:
-    - input_var (string)  : 'M', 'P_Pstar', 'rho_rhostar', 'T_Tstar', 'u_ustar', 'Pt_Ptstar', 'Tt_Ttstar'
-    - input_value (float) : Any positive float value
-    - g (float)           : Heat capacity ratio (default 1.4 for air)
+    Attributes:
+    - Inherits from CompressibleFlow superclass.
     
-    Returns:
-    - rayleigh_flow_data (dict) : Dictionary of all values for Rayleigh flow
-    
-    Example:
-    >>> rayleigh_flow_solver("M", 2)
-    >>> print(rayleigh_flow_solver("M", 0.5, 1.4)["Subsonic"]["P_Pstar"])
+    Methods:
+    - computation() : Computes all Rayleigh flow values. 
+    - __getattr__() : Creates attributes to any given variable. 
     """
 
-    M_min = 1e-6
-    M_max = 100
-
-    rayleigh_flow_data = {"Subsonic": {}, "Supersonic": {}}
-    
-    # Mach Number ----------------------------------------------------------------------------------
-    if (input_var == 'M'):
-        M = input_value
-        if (M <= 0):
-            raise ValueError("M must be greater than 0")
-        regime = "Subsonic" if M < 1 else "Supersonic"
-        rayleigh_flow_data[regime]["M"] = M
-
-    # Pressure Ratio -------------------------------------------------------------------------------
-    elif (input_var == 'P_Pstar'):
-        if (input_value <= 0):
-            raise ValueError("P/P* must be positive")
-        M_subsonic = brentq(SOLVE_M_from_P_Pstar, M_min, 0.999999, args = (input_value, g))
-        M_supersonic = brentq(SOLVE_M_from_P_Pstar, 1.000001, M_max, args = (input_value, g))
+    def computation(self) -> None:
+        """
+        Computes flow properties from the 'input_var' and 'input_val'.
+        Data is stored in the 'self.results' attribute.
         
-        rayleigh_flow_data["Subsonic"]["M"] = M_subsonic
-        rayleigh_flow_data["Supersonic"]["M"] = M_supersonic
-
-    # Density Ratio --------------------------------------------------------------------------------
-    elif (input_var == 'rho_rhostar'):
-        if (input_value <= 0):
-            raise ValueError("rho/rho* must be positive")
-        M_subsonic = brentq(SOLVE_M_from_rho_rhostar, M_min, 0.999999, args=(input_value, g))
-        M_supersonic = brentq(SOLVE_M_from_rho_rhostar, 1.000001, M_max, args=(input_value, g))
+        Raises:
+        - ValueError : Unknown input_var
+        """
         
-        rayleigh_flow_data["Subsonic"]["M"] = M_subsonic
-        rayleigh_flow_data["Supersonic"]["M"] = M_supersonic
-
-    # Temperature Ratio ----------------------------------------------------------------------------
-    elif (input_var == 'T_Tstar'):
-        if (input_value <= 0):
-            raise ValueError("T/T* must be positive")
-        M_subsonic = brentq(SOLVE_M_from_T_Tstar, M_min, 0.999999, args=(input_value, g))
-        M_supersonic = brentq(SOLVE_M_from_T_Tstar, 1.000001, M_max, args=(input_value, g))
+        gamma     : float = self.gamma
+        input_var : str = self.input_var
+        input_val : float = self.input_val
+        mach_min  : float = 1e-6
+        mach_max  : float = 1e6
+        data      : dict[str, dict[str, float]] = {'Subsonic': {}, 'Supersonic': {}}
         
-        rayleigh_flow_data["Subsonic"]["M"] = M_subsonic
-        rayleigh_flow_data["Supersonic"]["M"] = M_supersonic
-
-    # Velocity Ratio -------------------------------------------------------------------------------
-    elif (input_var == 'u_ustar'):
-        if (input_value <= 0):
-            raise ValueError("u/u* must be positive")
-        M_subsonic = brentq(SOLVE_M_from_u_ustar, M_min, 0.999999, args=(input_value, g))
-        M_supersonic = brentq(SOLVE_M_from_u_ustar, 1.000001, M_max, args=(input_value, g))
         
-        rayleigh_flow_data["Subsonic"]["M"] = M_subsonic
-        rayleigh_flow_data["Supersonic"]["M"] = M_supersonic
+        # Flow Solvers ----------------------------------------------------------------------------
+        # Mach ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        if (input_var == 'M'):
+            self.mach: float = input_val
+            if (self.mach <= 0):
+                raise ValueError('M must be greater than 0')
+            
+            flow_regime: str = 'Subsonic' if (self.mach < 1) else 'Supersonic'
+            data[flow_regime]['M'] = self.mach
 
-    # Stagnation Pressure Ratio --------------------------------------------------------------------
-    elif (input_var == 'Pt_Ptstar'):
-        if (input_value <= 0):
-            raise ValueError("Pt/Pt* must be positive")
-        M_subsonic = brentq(SOLVE_M_from_Pt_Ptstar, M_min, 0.999999, args=(input_value, g))
-        M_supersonic = brentq(SOLVE_M_from_Pt_Ptstar, 1.000001, M_max, args=(input_value, g))
+        # Pressure Ratio -------------------------------------------------------------------------------
+        elif (input_var == 'P_Pstar'):
+            if (input_val <= 0):
+                raise ValueError('P/P* must be positive')
+            
+            mach_subsonic: float = brentq(SOLVE_M_from_P_Pstar, mach_min, 0.999999, args = (input_val, gamma))
+            mach_supersonic: float = brentq(SOLVE_M_from_P_Pstar, 1.000001, mach_max, args = (input_val, gamma))
+            data['Subsonic']['M'] = mach_subsonic
+            data['Supersonic']['M'] = mach_supersonic
+
+        # Density Ratio --------------------------------------------------------------------------------
+        elif (input_var == 'rho_rhostar'):
+            if (input_val <= 0):
+                raise ValueError('rho/rho* must be positive')
+            
+            mach_subsonic: float = brentq(SOLVE_M_from_rho_rhostar, mach_min, 0.999999, args = (input_val, gamma))
+            mach_supersonic: float = brentq(SOLVE_M_from_rho_rhostar, 1.000001, mach_max, args = (input_val, gamma))
+            data['Subsonic']['M'] = mach_subsonic
+            data['Supersonic']['M'] = mach_supersonic
+
+        # Temperature Ratio ----------------------------------------------------------------------------
+        elif (input_var == 'T_Tstar'):
+            if (input_val <= 0):
+                raise ValueError('T/T* must be positive')
+            
+            mach_subsonic: float = brentq(SOLVE_M_from_T_Tstar, mach_min, 0.999999, args = (input_val, gamma))
+            mach_supersonic: float = brentq(SOLVE_M_from_T_Tstar, 1.000001, mach_max, args = (input_val, gamma))
+            data['Subsonic']['M'] = mach_subsonic
+            data['Supersonic']['M'] = mach_supersonic
+
+        # Velocity Ratio -------------------------------------------------------------------------------
+        elif (input_var == 'u_ustar'):
+            if (input_val <= 0):
+                raise ValueError('u/u* must be positive')
+            
+            mach_subsonic: float = brentq(SOLVE_M_from_u_ustar, mach_min, 0.999999, args = (input_val, gamma))
+            mach_supersonic: float = brentq(SOLVE_M_from_u_ustar, 1.000001, mach_max, args = (input_val, gamma))
+            data['Subsonic']['M'] = mach_subsonic
+            data['Supersonic']['M'] = mach_supersonic
+
+        # Stagnation Pressure Ratio --------------------------------------------------------------------
+        elif (input_var == 'Pt_Ptstar'):
+            if (input_val <= 0):
+                raise ValueError('Pt/Pt* must be positive')
+            
+            mach_subsonic: float = brentq(SOLVE_M_from_Pt_Ptstar, mach_min, 0.999999, args = (input_val, gamma))
+            mach_supersonic: float = brentq(SOLVE_M_from_Pt_Ptstar, 1.000001, mach_max, args = (input_val, gamma))
+            data['Subsonic']['M'] = mach_subsonic
+            data['Supersonic']['M'] = mach_supersonic
+
+        # Stagnation Temperature Ratio -----------------------------------------------------------------
+        elif (input_var == 'Tt_Ttstar'):
+            if (input_val <= 0):
+                raise ValueError('Tt/Tt* must be positive')
+            
+            mach_subsonic: float = brentq(SOLVE_M_from_Tt_Ttstar, mach_min, 0.999999, args = (input_val, gamma))
+            mach_supersonic: float = brentq(SOLVE_M_from_Tt_Ttstar, 1.000001, mach_max, args = (input_val, gamma))
+            data['Subsonic']['M'] = mach_subsonic
+            data['Supersonic']['M'] = mach_supersonic
         
-        rayleigh_flow_data["Subsonic"]["M"] = M_subsonic
-        rayleigh_flow_data["Supersonic"]["M"] = M_supersonic
-
-    # Stagnation Temperature Ratio -----------------------------------------------------------------
-    elif (input_var == 'Tt_Ttstar'):
-        if (input_value <= 0):
-            raise ValueError("Tt/Tt* must be positive")
-        M_subsonic = brentq(SOLVE_M_from_Tt_Ttstar, M_min, 0.999999, args=(input_value, g))
-        M_supersonic = brentq(SOLVE_M_from_Tt_Ttstar, 1.000001, M_max, args=(input_value, g))
+        else:
+            raise ValueError(f'Unknown input_var: {input_var}')
         
-        rayleigh_flow_data["Subsonic"]["M"] = M_subsonic
-        rayleigh_flow_data["Supersonic"]["M"] = M_supersonic
-    
-    else:
-        raise ValueError("Unknown input variable. Use 'M', 'P_Pstar', 'rho_rhostar', 'T_Tstar', 'u_ustar', 'Pt_Ptstar', or 'Tt_Ttstar'.")
+        
+        # Data Organiztion ------------------------------------------------------------------------
+        for flow_regime in ['Subsonic', 'Supersonic']:
+            if ('M' in data[flow_regime]):
+                data[flow_regime]['M'] = float(self.mach)
+                data[flow_regime]['P_Pstar'] = float(P_Pstar(self.mach, gamma))
+                data[flow_regime]['rho_rhostar'] = float(rho_rhostar(self.mach, gamma))
+                data[flow_regime]['T_Tstar'] = float(T_Tstar(self.mach, gamma))
+                data[flow_regime]['u_ustar'] = float(u_ustar(self.mach, gamma))
+                data[flow_regime]['Pt_Ptstar'] = float(Pt_Ptstar(self.mach, gamma))
+                data[flow_regime]['Tt_Ttstar'] = float(Tt_Ttstar(self.mach, gamma))
+                
+        self.results = data
+        
+        
+        
+    def __getattr__(self, attribute_title: str) -> float:
+        """
+        Creates decorators for each flow property. 
+        
+        Parameter:
+        - attribute_title (str) : Attribute title
 
-    for regime in ["Subsonic", "Supersonic"]:
-        if "M" in rayleigh_flow_data[regime]:
-            M = rayleigh_flow_data[regime]["M"]
-            rayleigh_flow_data[regime]["P_Pstar"] = P_Pstar(M, g)
-            rayleigh_flow_data[regime]["rho_rhostar"] = rho_rhostar(M, g)
-            rayleigh_flow_data[regime]["T_Tstar"] = T_Tstar(M, g)
-            rayleigh_flow_data[regime]["u_ustar"] = u_ustar(M, g)
-            rayleigh_flow_data[regime]["Pt_Ptstar"] = Pt_Ptstar(M, g)
-            rayleigh_flow_data[regime]["Tt_Ttstar"] = Tt_Ttstar(M, g)
-
-    return rayleigh_flow_data
+        Raises:
+        - AttributeError if name not found in any regime.
+        
+        Examples:
+        >>> RF.P_Pstar
+        >>> RF.Tt_Ttstar
+        """
+        
+        for regime in self.results.values():
+            if (attribute_title in regime):
+                return regime[attribute_title]
+            
+        raise AttributeError(f"'{self.__class__.__name__}' has no attribute '{attribute_title}'")
