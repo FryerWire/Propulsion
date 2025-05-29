@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1748485098.49688 "c:/Users/maxwe/OneDrive/Desktop/GitHub Repos/Propulsion/RPE Notes/RPENotes.tex" "RPENotes.pdf" "RPENotes" 1748485098.93151 0
+["pdflatex"] 1748494058.03887 "c:/Users/maxwe/OneDrive/Desktop/GitHub Repos/Propulsion/RPE Notes/RPENotes.tex" "RPENotes.pdf" "RPENotes" 1748494058.47163 0
   "C:/Users/maxwe/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1747243154 84158 d77284a6843bde1e4b9764f09fb2e89e ""
   "C:/Users/maxwe/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1744078724 12036088 68bb67fee89422e69c8c081e4ebe70b3 ""
   "C:/Users/maxwe/AppData/Local/Programs/MiKTeX/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1233951848 1004 54797486969f23fa377b128694d548df ""
@@ -39,9 +39,9 @@
   "C:/Users/maxwe/AppData/Local/Programs/MiKTeX/tex/latex/geometry/geometry.sty" 1578053545 42759 9cf6c5257b1bc7af01a58859749dd37a ""
   "C:/Users/maxwe/AppData/Local/Programs/MiKTeX/tex/latex/graphics/keyval.sty" 1730544106 2671 70891d50dac933918b827d326687c6e8 ""
   "C:/Users/maxwe/AppData/Local/Programs/MiKTeX/tex/latex/l3backend/l3backend-pdftex.def" 1716480499 29785 9f93ab201fe5dd053afcc6c1bcf7d266 ""
-  "RPENotes.aux" 1748485098 32 044b7f8fc9779af7531264e0c5c84b6d "pdflatex"
-  "RPENotes.tex" 1748485097 3004 8f46904d35907cdf4bb8cdaa4132062d ""
-  "c:/Users/maxwe/OneDrive/Desktop/GitHub Repos/Propulsion/RPE Notes/RPENotes.tex" 1748485097 3004 8f46904d35907cdf4bb8cdaa4132062d ""
+  "RPENotes.aux" 1748494058 32 044b7f8fc9779af7531264e0c5c84b6d "pdflatex"
+  "RPENotes.tex" 1748494057 3403 97593523a39f20be5f70a04837719a2c ""
+  "c:/Users/maxwe/OneDrive/Desktop/GitHub Repos/Propulsion/RPE Notes/RPENotes.tex" 1748494057 3403 97593523a39f20be5f70a04837719a2c ""
   (generated)
   "RPENotes.aux"
   "RPENotes.log"

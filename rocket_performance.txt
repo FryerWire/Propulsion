@@ -1,0 +1,24 @@
+
+RocketPerformance = {
+    mass : {
+        Initial    : 0,
+        Final      : 0,
+        Propellant : 0,
+        Payload    : 0
+    },
+
+    Specs : {
+        time             : 0,
+        gravity          : 9.81,
+        Specific Impulse : 0
+    }
+}
+
+
+Notes
+- Need to end up creating a fancy printer overall. 
+- Add comparison data from 'Page 54' 
+
+
+Rocket:
+RocketPerformace(Rocket):

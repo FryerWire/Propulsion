@@ -42,10 +42,18 @@ Thrust per unit propellant `weight' flow rate.
 
 \bigskip
 \noindent
-\textbf{Effectice Exhaust Velocity: }
+\textbf{Effectice Exhaust Velocity:}
 An average or mass-equivalent velocity at which propellant is being ejected from the nozzle.
 \begin{equation}
-    c = I_S g_0 = \frac{F}{\dot{m}}
+    c = I_S g_0 = \frac{F}{\dot{m}} = v_2 + (p_2 - p_3) \frac{A_2}{\dot{m}}
+\end{equation}
+
+\bigskip
+\noindent
+\textbf{Characteristic Velocity:}
+Compares relative performance of different chemical rocket propulsion systems. Essentially independent of nozzle characteristics. Can be related to the efficiency of the combustion process.
+\begin{equation}
+    c = I_S g_0 = \frac{F}{\dot{m}} = v_2 + (p_2 - p_3) \frac{A_2}{\dot{m}}
 \end{equation}
 
 \bigskip
@@ -91,7 +99,7 @@ The total impulse divided by the initial propellant-loaded vehicle sea-level wei
     $m_f$                  \> Final Mass                      \> kg          \\
     $m_0$                  \> Initial Mass                    \> kg          \\
     $\zeta$                \> Propellant Mass Fraction        \> Unitless    \\
-    $I_t$ / $w_0$          \> Impulse-to-Weight Ratio         \> s / kg      \\
+    $I_t$ / $w_0$          \> Impulse-to-Weight Ratio         \> s           \\
 \end{tabbing}
 
 \end{document}

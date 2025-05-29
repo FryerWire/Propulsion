@@ -1,0 +1,78 @@
+
+Chapter 2 =========================================================================================
+Example 2.1 ---------------------------------------------------------------------------------------
+example_2_1 = {
+    mass: {
+        Initial    : 200,
+        Final      : 130,
+        Payload    : 110
+    },
+
+    Specs: {
+        time             : 3,
+        gravity          : 9.81,
+        Specific Impulse : 240
+    }
+
+    Answers: {
+        Propellant Mass           : 70,
+        Mass Ratio                : 0.65,
+        Propellant Mass Fraction  : 0.778,
+        Effectice Propellant Vel  : 2354.4,
+        Propellant Mass Flow Rate : 23.3,
+        Thurst                    : 54936,
+        Total Impulse             : 164808,
+        Impulse to Weight         : 187
+    }
+}
+
+Example 2.2 ---------------------------------------------------------------------------------------
+example_2_2 = {
+    mass: {
+        Initial    : 200,
+        Final      : 130,
+        Payload    : 110
+    },
+
+    Specs: {
+        time             : 3,
+        gravity          : 9.81,
+        Specific Impulse : 240
+    }
+
+    Answers: {
+        Propellant Mass           : 70,
+        Mass Ratio                : 0.65,
+        Propellant Mass Fraction  : 0.778,
+        Effectice Propellant Vel  : 2354.4,
+        Propellant Mass Flow Rate : 23.3,
+        Thurst                    : 54936,
+        Total Impulse             : 164808,
+        Impulse to Weight         : 187
+    }
+}
+
+Burn Duration : 40,
+Propellant Mass : 1210
+Final Mass : 215
+Thrust : 62250
+Chamber Pressure : 7000000
+Nozzle Exit Pressure : 70000
+Nozzle Throat Diameter : 8.55 cm
+Nozzle Exit Diameter : 27.03 cm
+
+
+
+class RocketPerformance:
+    def __init__(self, **kwargs):
+        self.params = kwargs
+        self.g_0 = kwargs.get("g_0", 9.81)
+
+    def propellant_mass(self):
+        return self.params["m_0"] - self.params["m_f"]
+
+    def effective_exhaust_velocity(self):
+        return self.params["I_S"] * self.g_0
+
+
+rocket = RocketPerformance(m_0=500, m_f=300, I_S=290, t=60)
