@@ -1,0 +1,5 @@
+
+Variables:
+- Make all variables easier to read
+- Variable datasheet
+

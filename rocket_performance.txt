@@ -18,6 +18,7 @@ RocketPerformance = {
 Notes
 - Need to end up creating a fancy printer overall. 
 - Add comparison data from 'Page 54' 
+- Make a variable list
 
 
 Rocket:
