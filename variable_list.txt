@@ -1,0 +1,6 @@
+
+m_0: Wet mass, intial mass
+m_f: Dry mass, final mass
+m_P: Propellant mass, 
+
+m_0 = m_f + m_p
